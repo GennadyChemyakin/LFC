@@ -1,0 +1,39 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="LFC.RegPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel содержит имя приложения и заголовок страницы-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Last.fm" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="Black" FontFamily="Segoe WP" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!--ContentPanel – поместите здесь дополнительное содержимое-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBlock Text="Имя пользователя" Foreground="Black" Margin="52,105,196,498" Opacity="0.5"/>
+            <TextBlock Text="Пароль" Foreground="Black" Margin="52,212,254,383" Opacity="0.5" />
+            <TextBox x:Name="UserName" Margin="29,127,23,439" BorderBrush="#BF000000" />
+            <TextBox x:Name="Password" Margin="29,234,23,332" BorderBrush="#BF000000" />
+            <Button Content="Вход" Name="Enter" Foreground="Black" BorderBrush="Black" Margin="29,337,225,220" />
+            <Button Content="Регистрация" Name="Reg" Foreground="Black" BorderBrush="Black" Margin="231,337,23,220" />
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

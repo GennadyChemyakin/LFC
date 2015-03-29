@@ -36,24 +36,25 @@
             CurrentUICulture of the app at run time.
          -->
 
-         <!--Panorama control-->
-        <phone:Panorama Title="my application">
+        <!--Panorama control-->
+        <phone:Panorama Title="Last.fm" >
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
             <!--Panorama item one-->
-            <phone:PanoramaItem Header="first item">
-                <!--Single line list with text wrapping-->
-                <phone:LongListSelector Margin="0,0,-22,0" ItemsSource="{Binding Items}">
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,-6,0,12">
-                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeExtraLarge}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
+            <phone:PanoramaItem Header="Меню" Foreground="Black">
+                <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
+                    
+                    <HyperlinkButton Content="Профиль" x:Name="Profile"  NavigateUri="/Profile.xaml" Foreground="Black" FontSize="30" Height="68" HorizontalAlignment="Left" />
+                    <HyperlinkButton Content="Друзья" x:Name="Friends"   Foreground="Black" FontSize="30" Height="68" HorizontalAlignment="Left" />
+                    <HyperlinkButton Content="События" x:Name="Events"  NavigateUri="/Events.xaml" Foreground="Black"  FontSize="30" Height="68" HorizontalAlignment="Left"/>
+                    <HyperlinkButton Content="Библиотека" x:Name="Library" NavigateUri="/Library.xaml" Foreground="Black" FontSize="30" HorizontalAlignment="Left" Height="68" />
+                    <HyperlinkButton Content="Настройки" x:Name="Settings" NavigateUri="/Settings.xaml" Foreground="Black" FontSize="30" HorizontalAlignment="Left" Height="68" />  
+                </StackPanel>
+
+
+
             </phone:PanoramaItem>
 
             <!--Panorama item two-->
@@ -79,8 +80,8 @@
                                 <!--Replace rectangle with image-->
                                 <Border BorderThickness="1" Width="99" Height="99" BorderBrush="#FFFFC700" Background="#FFFFC700"/>
                                 <StackPanel Width="311" Margin="8,-7,0,0">
-                                    <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                                    <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                    <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="Black" />
+                                    <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="#99000000" />
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
