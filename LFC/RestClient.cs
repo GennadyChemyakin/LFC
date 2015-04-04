@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography;
+using Newtonsoft.Json.Linq;
 
 namespace RestClient
 {
@@ -36,13 +37,14 @@ namespace RestClient
 			webRequest.AllowAutoRedirect = false;
 
 
-            foreach(KeyValuePair<string, string> pair in requestParams)
+            foreach (KeyValuePair<string, string> pair in requestParams)
             {
                 postSB.Append(pair.Key);
                 postSB.Append("=");
                 postSB.Append(pair.Value);
                 postSB.Append("&");
             }
+            postSB.Append("format=json");
 
 			byte[] ByteArr = 
 				System.Text.Encoding.GetEncoding("UTF-8").GetBytes(postSB.ToString());
@@ -92,13 +94,30 @@ namespace RestClient
         public string userGetInfo(string username)
         {
             var request = new LfcRequest();
-            request.addParameter("method", "user.GetInfo");
             request.addParameter("user", username);
+            request.addParameter("method", "user.GetInfo");
             request.addParameter("api_key", apiKey);
 
             return request.execute();
         }
 
+        public string userShout(string user)
+        {
+            MD5 md5Hash = MD5.Create();
+            string requestString = "api_key" + apiKey + "message" + "hello!" +
+                                   "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
+            string api_sig = LfcAuth.getMd5Hash(md5Hash, requestString);
+
+            var request = new LfcRequest();
+            request.addParameter("method", "user.shout");
+            request.addParameter("user", user);
+            request.addParameter("message", "hello!");
+            request.addParameter("api_key", apiKey);
+            request.addParameter("api_sig", api_sig);
+            request.addParameter("sk", sk);
+
+            return request.execute();
+        }
 
     }
 
@@ -109,7 +128,7 @@ namespace RestClient
         private string username;
         private string password;
         private bool auth;
-        private string secretKey;           // key, возвращаемый после удачной авторизации
+        private string secretKey;          // key, возвращаемый после удачной авторизации
 
         LfcRequest request;
 
@@ -123,7 +142,7 @@ namespace RestClient
 
             auth = false;
 
-            request.addParameter("method", "auth.getMobileSession");
+            request.addParameter("method", "auth.getmobilesession");
             request.addParameter("username", username);
             request.addParameter("password", password);
             request.addParameter("api_key", apiKey);
@@ -131,6 +150,10 @@ namespace RestClient
 
             var response = request.execute();
 
+            Console.WriteLine("Response:\n {0}", response);
+
+            dynamic obj = JObject.Parse(response);
+            secretKey = obj.session.key;
             // TODO: доставать sk из ответа и проверять авторизовались ли вообще
             // и кидать исключение может быть
             auth = true;
@@ -146,16 +169,16 @@ namespace RestClient
             return secretKey;
         }
 
-        private string getApiSig()
+        public string getApiSig()
         {
             MD5 md5Hash = MD5.Create();
             string requestString = "api_key" + apiKey +
-                                   "methodauth.getMobileSession" + "password" +
+                                   "methodauth.getmobilesession" + "password" +
                                    password + "username" + username + secretApiKey;
             return getMd5Hash(md5Hash, requestString);
         }
 
-        private string getMd5Hash(MD5 md5Hash, string input)
+        public static string getMd5Hash(MD5 md5Hash, string input)
         {
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
             StringBuilder sBuilder = new StringBuilder();
