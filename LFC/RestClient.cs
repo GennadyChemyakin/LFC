@@ -5,6 +5,7 @@ using System.Net;
 using System.IO;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 using LFC.Models;
 
 namespace RestClient
@@ -17,7 +18,7 @@ namespace RestClient
 
         public LFCRequest()
         {
-            serverUrl = "https://ws.audioscrobbler.com/2.0/?";
+            serverUrl = "https://ws.audioscrobbler.com";
             requestParams = new Dictionary<string,string>();
         }
 
@@ -28,54 +29,16 @@ namespace RestClient
 
         public string execute()
         {
-            var postSB = new StringBuilder();
-			var response = new StringBuilder();
-			var webRequest = WebRequest.Create(serverUrl) as HttpWebRequest;
-
-			           
-			webRequest.ContentType="application/x-www-form-urlencoded";
-			webRequest.Method = "POST";
-			webRequest.AllowAutoRedirect = false;
-
-
-            foreach (KeyValuePair<string, string> pair in requestParams)
+            addParameter("format", "json");
+            using (var client = new HttpClient())
             {
-                postSB.Append(pair.Key);
-                postSB.Append("=");
-                postSB.Append(pair.Value);
-                postSB.Append("&");
+                client.BaseAddress = new Uri(serverUrl);
+                var content = new FormUrlEncodedContent(requestParams);
+                var result = client.PostAsync("/2.0/", content).Result;
+                string resultContent = result.Content.ReadAsStringAsync().Result;
+                return resultContent;
             }
-            postSB.Append("format=json");
-
-			byte[] ByteArr = 
-				System.Text.Encoding.GetEncoding("UTF-8").GetBytes(postSB.ToString());
-			webRequest.ContentLength = ByteArr.Length;
-
-			webRequest.GetRequestStream().Write(ByteArr, 0, ByteArr.Length);
-
-			// response
-			try
-			{
-				var webResponse = webRequest.GetResponse() as HttpWebResponse;
-				using (var responseStreamReader = new StreamReader (webResponse.GetResponseStream (), Encoding.GetEncoding ("UTF-8"))) {
-					String line = null;
-					while ((line = responseStreamReader.ReadLine()) != null) {
-						response.Append (line);
-						response.Append ("\n");
-					}
-				}
-			}
-			catch(WebException e)
-			{
-				Console.WriteLine (e.StackTrace);
-                if (((HttpWebResponse)e.Response) != null)
-                {
-                    Console.WriteLine("Ошибка! \n");
-                    Console.WriteLine(((HttpWebResponse)e.Response).StatusCode);
-                }
-			}
-			return response.ToString();
-		}
+        }
     }
 
     class Client
@@ -108,6 +71,8 @@ namespace RestClient
         {
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
+
+            //MD5 md5Hash = MD5.Create();
             //string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
 
             string api_sig = MD5Core.GetHashString(requestString);
