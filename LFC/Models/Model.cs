@@ -53,7 +53,7 @@ namespace LFC.Models
             str.Append("Name: " + name + "\n");
             str.Append("RealName: " + realname + "\n");
             str.Append("ImgSmall: " + imgSmall + "\n");
-            str.Append("ImgMedium: " + imgMedium + "\n");
+            str.Append("ImgMedium: " + imgMedium + "\n\n");
             return str.ToString();
         }
     }

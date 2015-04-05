@@ -106,10 +106,11 @@ namespace RestClient
 
         public string userShout(string user, string message)
         {
-            MD5 md5Hash = MD5.Create();
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
-            string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
+            //string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
+
+            string api_sig = MD5Core.GetHashString(requestString);
 
             var request = new LFCRequest();
             request.addParameter("method", "user.shout");
@@ -187,22 +188,23 @@ namespace RestClient
 
         public string getApiSig()
         {
-            MD5 md5Hash = MD5.Create();
+            //MD5 md5Hash = MD5.Create();
             string requestString = "api_key" + apiKey +
                                    "methodauth.getmobilesession" + "password" +
                                    password + "username" + username + secretApiKey;
-            return getMd5Hash(md5Hash, requestString);
+            //return getMd5Hash(md5Hash, requestString);
+            return MD5Core.GetHashString(requestString);
         }
 
-        public static string getMd5Hash(MD5 md5Hash, string input)
-        {
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
-        }
+        //public static string getMd5Hash(MD5 md5Hash, string input)
+        //{
+        //    byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+        //    StringBuilder sBuilder = new StringBuilder();
+        //    for (int i = 0; i < data.Length; i++)
+        //    {
+        //        sBuilder.Append(data[i].ToString("x2"));
+        //    }
+        //    return sBuilder.ToString();
+        //}
     }
 }
