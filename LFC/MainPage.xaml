@@ -45,71 +45,157 @@
             <!--Panorama item one-->
             <phone:PanoramaItem Header="Меню" Foreground="Black">
                 <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
+                                
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Профиль" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Друзья" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Events.xaml">
+                                <Run Text="События" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Library.xaml">
+                                <Run Text="Библиотека" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Настройки" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                </StackPanel>
+            </phone:PanoramaItem>
+
+            <!--Events-->
+            <phone:PanoramaItem Header="События" Foreground="Black" >
+                <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
+
                     
-                    <HyperlinkButton Content="Профиль" x:Name="Profile"  NavigateUri="/Profile.xaml" Foreground="Black" FontSize="30" Height="68" HorizontalAlignment="Left" />
-                    <HyperlinkButton Content="Друзья" x:Name="Friends"   Foreground="Black" FontSize="30" Height="68" HorizontalAlignment="Left" />
-                    <HyperlinkButton Content="События" x:Name="Events"  NavigateUri="/Events.xaml" Foreground="Black"  FontSize="30" Height="68" HorizontalAlignment="Left"/>
-                    <HyperlinkButton Content="Библиотека" x:Name="Library" NavigateUri="/Library.xaml" Foreground="Black" FontSize="30" HorizontalAlignment="Left" Height="68" />
-                    <HyperlinkButton Content="Настройки" x:Name="Settings" NavigateUri="/Settings.xaml" Foreground="Black" FontSize="30" HorizontalAlignment="Left" Height="68" />  
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Твои события" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Library.xaml">
+                                <Run Text="События друзей" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="92">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Добавленные тобой события" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
                 </StackPanel>
 
-
+            </phone:PanoramaItem>
+            
+            <!-- Friends -->
+            <phone:PanoramaItem Header="Рупор" Foreground="Black">
 
             </phone:PanoramaItem>
+            
+            <!-- Library -->
+            <phone:PanoramaItem Header="Друзья" Foreground="Black">
 
-            <!--Panorama item two-->
-            <phone:PanoramaItem>
-                <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
-                <phone:LongListSelector Margin="0,-38,-22,2" ItemsSource="{Binding Items}">
-                    <phone:LongListSelector.ListHeaderTemplate>
-                        <DataTemplate>
-                            <Grid Margin="12,0,0,38">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="second item"
-                                           Style="{StaticResource PanoramaItemHeaderTextStyle}"
-                                           Grid.Row="0"/>
-                            </Grid>
-                        </DataTemplate>
-                    </phone:LongListSelector.ListHeaderTemplate>
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
-                                <!--Replace rectangle with image-->
-                                <Border BorderThickness="1" Width="99" Height="99" BorderBrush="#FFFFC700" Background="#FFFFC700"/>
-                                <StackPanel Width="311" Margin="8,-7,0,0">
-                                    <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" Foreground="Black" />
-                                    <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="#99000000" />
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
             </phone:PanoramaItem>
+            
+            <!--Rupor-->
+            <phone:PanoramaItem Header="Библиотека" Orientation="Horizontal" Foreground="Black">
+                <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
 
-            <!--Panorama item three-->
-            <phone:PanoramaItem Header="third item" Orientation="Horizontal">
-                <!--Double wide Panorama with large image placeholders-->
-                <Grid>
-                    <StackPanel Margin="0,4,16,0" Orientation="Vertical" VerticalAlignment="Top">
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                        </StackPanel>
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,12,0,0">
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                            <Border Background="#FFFFC700" Height="173" Width="173" Margin="12,0,0,0"/>
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Рекомендации" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Музыка" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Любимые" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Library.xaml">
+                                <Run Text="Запрещенные" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Плейлисты" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+                    
+                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
+                        <Paragraph>
+                            <Hyperlink NavigateUri="/Settings.xaml">
+                                <Run Text="Теги" FontSize="35" Foreground="black" TextDecorations="None"/>
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBox>
+                </StackPanel>
             </phone:PanoramaItem>
+            
+            <!-- Друзья -->
+            
+
+            
+
+
         </phone:Panorama>
+        
+        
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
