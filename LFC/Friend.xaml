@@ -1,0 +1,35 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="LFC.Friend"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot">
+        <phone:Panorama Title="Last.fm" >
+            <phone:Panorama.Background>
+                <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
+            </phone:Panorama.Background>
+
+            <!--Первый элемент Panorama-->
+            <phone:PanoramaItem Header="item1" Foreground="Black">
+                <Grid/>
+            </phone:PanoramaItem>
+
+            <!--Второй элемент Panorama-->
+            <phone:PanoramaItem Header="item2" Foreground="Black">
+                <Grid/>
+            </phone:PanoramaItem>
+        </phone:Panorama>
+    </Grid>
+
+</phone:PhoneApplicationPage>
