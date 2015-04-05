@@ -5,17 +5,17 @@ using System.Net;
 using System.IO;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
-using RestClient.Objects;
+using LFC.Models;
 
 namespace RestClient
 {
-    class LfcRequest
+    class LFCRequest
     {
         private string serverUrl;
         private Dictionary<string, string> requestParams;
 
 
-        public LfcRequest()
+        public LFCRequest()
         {
             serverUrl = "https://ws.audioscrobbler.com/2.0/?";
             requestParams = new Dictionary<string,string>();
@@ -83,7 +83,7 @@ namespace RestClient
         private string apiKey;
         private string sk; // ключ для авторизованных запросов
 
-        public Client(LfcAuth auth)
+        public Client(LFCAuth auth)
         {
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             sk = auth.getKey();
@@ -92,16 +92,16 @@ namespace RestClient
         // сюда писать кучу методов из ластфм
         // Хз, что они возвращать будут, может быть Dictionary<string, string> каждый свой
 
-        public LfcUser userGetInfo(string username)
+        public LFCUser userGetInfo(string username)
         {
-            var request = new LfcRequest();
-            var user = new LfcUser();
+            var request = new LFCRequest();
+            var user = new LFCUser();
             request.addParameter("user", username);
             request.addParameter("method", "user.GetInfo");
             request.addParameter("api_key", apiKey);
 
             dynamic obj = JObject.Parse(request.execute());
-            return new LfcUser((JObject)obj.user);
+            return new LFCUser((JObject)obj.user);
         }
 
         public string userShout(string user, string message)
@@ -109,9 +109,9 @@ namespace RestClient
             MD5 md5Hash = MD5.Create();
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
-            string api_sig = LfcAuth.getMd5Hash(md5Hash, requestString);
+            string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
 
-            var request = new LfcRequest();
+            var request = new LFCRequest();
             request.addParameter("method", "user.shout");
             request.addParameter("user", user);
             request.addParameter("message", message);
@@ -124,7 +124,7 @@ namespace RestClient
 
         public string userGetFriends(string friend)
         {
-            var request = new LfcRequest();
+            var request = new LFCRequest();
             request.addParameter("method", "user.GetFriends");
             request.addParameter("user", friend);
             request.addParameter("api_key", apiKey);
@@ -134,7 +134,7 @@ namespace RestClient
 
     }
 
-    class LfcAuth
+    class LFCAuth
     {
         private string apiKey;
         private string secretApiKey;        // secret key из аккаунта разработчика
@@ -143,15 +143,15 @@ namespace RestClient
         private bool auth;
         private string secretKey;          // key, возвращаемый после удачной авторизации
 
-        LfcRequest request;
+        LFCRequest request;
 
-        public LfcAuth(string user, string pass)
+        public LFCAuth(string user, string pass)
         {
             username = user;
             password = pass;
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             secretApiKey = "96bd810a71249530b5f3831cd09f43d1";
-            request = new LfcRequest();
+            request = new LFCRequest();
             auth = false;
 
             // TODO: доставать sk из ответа и проверять авторизовались ли вообще

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace RestClient.Objects
+namespace LFC.Models
 {
-    class LfcUser
+    class LFCUser
     {
         private string name;
         private string realname;
@@ -19,7 +19,7 @@ namespace RestClient.Objects
         public string ImgSmall { get { return imgSmall; } set { imgSmall = value; } }
         public string ImgMedium { get { return imgMedium; } set { imgMedium = value; } }
 
-        public LfcUser(string n, string rn)
+        public LFCUser(string n, string rn)
         {
             name = n;
             realname = rn;
@@ -27,7 +27,7 @@ namespace RestClient.Objects
             imgMedium = String.Empty;
         }
 
-        public LfcUser()
+        public LFCUser()
         {
             name = String.Empty;
             realname = String.Empty;
@@ -35,7 +35,7 @@ namespace RestClient.Objects
             imgMedium = String.Empty;
         }
 
-        public LfcUser(JObject obj)
+        public LFCUser(JObject obj)
         {
             name = obj.Value<string>("name");
             realname = obj.Value<string>("realname");
