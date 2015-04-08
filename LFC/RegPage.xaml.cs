@@ -10,6 +10,8 @@ using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
+using RestClient;
+
 
 namespace LFC
 {
@@ -21,7 +23,14 @@ namespace LFC
         }
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            LFCAuth auth = new LFCAuth(UserName.Text, Password.Text);
+            auth.getAuth();
+            if (auth.Sk != null)
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            else
+            {
+                UserName.Text = "asd";
+            }
         }
     }
    
