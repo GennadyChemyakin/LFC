@@ -49,11 +49,8 @@ namespace RestClient
         public Client(LFCAuth auth)
         {
             apiKey = "0909a979a62a8693b4846e53370a8d20";
-            sk = auth.getKey();
+            sk = auth.Sk;
         }
-
-        // сюда писать кучу методов из ластфм
-        // Хз, что они возвращать будут, может быть Dictionary<string, string> каждый свой
 
         public LFCUser userGetInfo(string username)
         {
@@ -107,7 +104,9 @@ namespace RestClient
         private string username;
         private string password;
         private bool auth;
-        private string secretKey;          // key, возвращаемый после удачной авторизации
+        private string sk;          // key, возвращаемый после удачной авторизации
+
+        public string Sk { get {return sk;} }
 
         LFCRequest request;
 
@@ -118,11 +117,9 @@ namespace RestClient
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             secretApiKey = "96bd810a71249530b5f3831cd09f43d1";
             request = new LFCRequest();
-            auth = false;
 
             // TODO: доставать sk из ответа и проверять авторизовались ли вообще
             // и кидать исключение может быть
-            auth = true;
         }
 
         public void getAuth()
@@ -138,18 +135,13 @@ namespace RestClient
             Console.WriteLine("Response:\n {0}", response);
 
             dynamic obj = JObject.Parse(response);
-                secretKey = obj.session.key;
+                sk = obj.session.key;
         }
 
-        public bool isAuth()
-        {
-            return auth;
-        }
-
-        public string getKey()
-        {
-            return secretKey;
-        }
+        //public string getKey()
+        //{
+        //    return sk;
+        //}
 
         public string getApiSig()
         {
