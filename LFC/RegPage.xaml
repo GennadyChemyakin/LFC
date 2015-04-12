@@ -22,19 +22,21 @@
 
         <!--TitlePanel содержит имя приложения и заголовок страницы-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="Last.fm" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="Black" FontFamily="Segoe WP" HorizontalAlignment="Center"/>
+            <!--<TextBlock Text="Last.fm" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" Foreground="Black" FontFamily="Segoe WP" HorizontalAlignment="Center"/>-->
         </StackPanel>
 
         <!--ContentPanel – поместите здесь дополнительное содержимое-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Margin="12,80,12,0" Grid.Row="1">
+            <Image Source="/LFC;component/Assets/logoLFC.jpg" Margin="76,-115,63,543"/>
             <TextBlock Text="Имя пользователя" Foreground="Black" Margin="52,105,196,498" Opacity="0.5"/>
             <TextBlock Text="Пароль" Foreground="Black" Margin="52,212,254,383" Opacity="0.5" />
             <TextBox x:Name="UserName" Margin="29,127,23,439" BorderBrush="#BF000000" />
             <PasswordBox x:Name="Password" Margin="29,234,23,332" BorderBrush="#BF000000" />
             <Button Content="Вход" Name="Enter" Foreground="Black" BorderBrush="Black" Margin="29,337,225,220" Click="Enter_Click" />
-            <Button Content="Регистрация" Name="Reg" Foreground="Black" BorderBrush="Black" Margin="231,337,23,220" Click="Reg_Clicked" />
-            <ProgressBar x:Name="authProgress" HorizontalAlignment="Left" Height="9" Margin="10,0,0,0" VerticalAlignment="Top" Width="436"/>
+            <Button Content="Регистрация" Name="Reg" Foreground="Black" BorderBrush="Black" Margin="231,337,23,220" />
+            <ProgressBar x:Name="authProgress" HorizontalAlignment="Left" Height="46" Margin="10,587,0,0" VerticalAlignment="Top" Width="436"/>
         </Grid>
+        <Image Source="/LFC;component/Assets/duckLFC.png" Margin="174,497,168,38" Grid.Row="1"/>
     </Grid>
 
 </phone:PhoneApplicationPage>
