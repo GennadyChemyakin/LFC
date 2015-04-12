@@ -30,8 +30,8 @@
             <TextBlock Text="Имя пользователя" Foreground="Black" Margin="52,105,196,498" Opacity="0.5"/>
             <TextBlock Text="Пароль" Foreground="Black" Margin="52,212,254,383" Opacity="0.5" />
             <TextBox x:Name="UserName" Margin="29,127,23,439" BorderBrush="#BF000000" />
-            <TextBox x:Name="Password" Margin="29,234,23,332" BorderBrush="#BF000000" />
-            <Button Content="Вход" Name="Enter" Foreground="Black" BorderBrush="Black" Margin="29,337,225,220" Click="Enter_Click"/>
+            <PasswordBox x:Name="Password" Margin="29,234,23,332" BorderBrush="#BF000000" />
+            <Button Content="Вход" Name="Enter" Foreground="Black" BorderBrush="Black" Margin="29,337,225,220" Click="Enter_Click" />
             <Button Content="Регистрация" Name="Reg" Foreground="Black" BorderBrush="Black" Margin="231,337,23,220" />
         </Grid>
     </Grid>

@@ -12,8 +12,6 @@ using System.Windows.Media.Effects;
 using RestClient;
 using System.Threading.Tasks;
 
-using RestClient;
-
 
 namespace LFC
 {
@@ -22,7 +20,7 @@ namespace LFC
         public RegPage()
         {
             InitializeComponent();
-            
+
         }
         private async void Enter_Click(object sender, RoutedEventArgs e)
         {
@@ -31,10 +29,10 @@ namespace LFC
             LFCAuth auth = new LFCAuth(UserName.Text, Password.Password);
             var msg = await auth.getAuth();
             MessageBox.Show(msg);
-            if(auth.getKey() != null)
-        {
-           NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            if (auth.Sk != null)
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            }
         }
     }
-   
 }

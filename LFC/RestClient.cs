@@ -114,9 +114,22 @@ namespace RestClient
         private string username;
         private string password;
         private bool auth;
-       private string secretKey;          // key, возвращаемый после удачной авторизации
+        private string secretKey;          // key, возвращаемый после удачной авторизации
 
         LFCRequest request;
+
+
+        public string Sk
+        {
+            get
+            {
+                return secretKey;
+            }
+            set
+            {
+                secretKey = value;
+            }
+        }
 
         public LFCAuth(string user, string pass)
         {
@@ -165,8 +178,9 @@ namespace RestClient
 
             //sk = json["session"]["key"].ToString ();
 
-            dynamic obj = JObject.Parse(response);
-                secretKey = obj.session.key;
+            // dynamic obj = JObject.Parse(response);
+            // secretKey = obj.session.key
+            return response;
         }
 
         //public string getKey()
