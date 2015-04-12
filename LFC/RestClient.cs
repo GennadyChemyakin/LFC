@@ -8,8 +8,9 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using LFC.Models;
 using System.Threading.Tasks;
+using System.Collections;
 
-namespace RestClient
+namespace LFC.Client
 {
     class LFCRequest
     {
@@ -31,7 +32,6 @@ namespace RestClient
         public async Task<string> execute()
         {
             addParameter("format", "json");
-            //var handler = new HttpClientHandler();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(serverUrl);
@@ -62,6 +62,49 @@ namespace RestClient
             sk = auth.Sk;
         }
 
+        //public LFCUser userGetInfo(string username)
+        //{
+        //    var request = new LFCRequest();
+        //    var user = new LFCUser();
+        //    request.addParameter("user", username);
+        //    request.addParameter("method", "user.GetInfo");
+        //    request.addParameter("api_key", apiKey);
+
+        //    dynamic obj = JObject.Parse(request.execute().ToString());
+        //    return new LFCUser((JObject)obj.user);
+        //}
+
+        //public string userShout(string user, string message)
+        //{
+        //    string requestString = "api_key" + apiKey + "message" + message +
+        //                           "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
+
+        //    //MD5 md5Hash = MD5.Create();
+        //    //string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
+
+        //    string api_sig = MD5Core.GetHashString(requestString);
+
+        //    var request = new LFCRequest();
+        //    request.addParameter("method", "user.shout");
+        //    request.addParameter("user", user);
+        //    request.addParameter("message", message);
+        //    request.addParameter("api_key", apiKey);
+        //    request.addParameter("api_sig", api_sig);
+        //    request.addParameter("sk", sk);
+
+        //    return request.execute().ToString();
+        //}
+
+        //public string userGetFriends(string friend)
+        //{
+        //    var request = new LFCRequest();
+        //    request.addParameter("method", "user.GetFriends");
+        //    request.addParameter("user", friend);
+        //    request.addParameter("api_key", apiKey);
+
+        //    return request.execute().Result;
+        //}
+
         public LFCUser userGetInfo(string username)
         {
             var request = new LFCRequest();
@@ -70,8 +113,8 @@ namespace RestClient
             request.addParameter("method", "user.GetInfo");
             request.addParameter("api_key", apiKey);
 
-            dynamic obj = JObject.Parse(request.execute().ToString());
-            return new LFCUser((JObject)obj.user);
+            JObject obj = JObject.Parse(request.execute().ToString());
+            return new LFCUser((JObject)obj["user"]);
         }
 
         public string userShout(string user, string message)
@@ -79,11 +122,9 @@ namespace RestClient
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
 
-            //MD5 md5Hash = MD5.Create();
-            //string api_sig = LFCAuth.getMd5Hash(md5Hash, requestString);
-
+            //MD5.MD5 md = new MD5.MD5(requestString);
             string api_sig = MD5Core.GetHashString(requestString);
-
+            //string api_sig = md.FingerPrint;
             var request = new LFCRequest();
             request.addParameter("method", "user.shout");
             request.addParameter("user", user);
@@ -91,20 +132,79 @@ namespace RestClient
             request.addParameter("api_key", apiKey);
             request.addParameter("api_sig", api_sig);
             request.addParameter("sk", sk);
-
             return request.execute().ToString();
         }
 
-        public string userGetFriends(string friend)
+        public List<LFCUser> userGetFriends(string friend)
         {
+            List<LFCUser> friends = new List<LFCUser>();
             var request = new LFCRequest();
             request.addParameter("method", "user.GetFriends");
             request.addParameter("user", friend);
             request.addParameter("api_key", apiKey);
 
-            return request.execute().Result;
+
+            //dynamic obj = JObject.Parse(request.execute());
+            //dynamic users = obj.friends.user;
+            JObject json = JObject.Parse(request.execute().ToString());
+            var users = json["friends"]["user"];
+            try
+            {
+                foreach (JObject user in users)
+                    friends.Add(new LFCUser(user));
+            }
+            catch (NullReferenceException e)         // если друзей нет
+            {
+            }
+            return friends;
         }
 
+        public List<LFCShout> userGetShouts(string user)
+        {
+            List<LFCShout> s = new List<LFCShout>();
+            var request = new LFCRequest();
+            request.addParameter("method", "user.GetShouts");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+            //dynamic obj = JObject.Parse(request.execute());
+            //dynamic shouts = obj.shouts.shout;
+            JObject json = JObject.Parse(request.execute().ToString());
+            var shouts = json["shouts"]["shout"];
+            try
+            {
+                foreach (JObject shout in shouts)
+                    s.Add(new LFCShout(shout));
+            }
+            catch (NullReferenceException e)         // если shout нет
+            {
+            }
+            return s;
+        }
+
+        public List<LFCTrack> userGetRecentTracks(string user)
+        {
+            List<LFCTrack> s = new List<LFCTrack>();
+            var request = new LFCRequest();
+            request.addParameter("method", "user.GetRecentTracks");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+            //dynamic obj = JObject.Parse(request.execute());
+            //dynamic tracks = obj.recenttracks.track;
+
+            JObject json = JObject.Parse(request.execute().ToString());
+            var tracks = json["recenttracks"]["tracks"];
+            try
+            {
+                foreach (JObject track in tracks)
+                    s.Add(new LFCTrack(track));
+            }
+            catch(NullReferenceException e)         // если треков нет
+            {
+            }
+            return s;
+        }
     }
 
     class LFCAuth
@@ -113,12 +213,8 @@ namespace RestClient
         private string secretApiKey;        // secret key из аккаунта разработчика
         private string username;
         private string password;
-        private bool auth;
         private string secretKey;          // key, возвращаемый после удачной авторизации
-
         LFCRequest request;
-
-
         public string Sk
         {
             get
@@ -173,7 +269,7 @@ namespace RestClient
                 }
             }catch(NullReferenceException e)
             {
-
+                throw e;
             }
 
             //sk = json["session"]["key"].ToString ();
