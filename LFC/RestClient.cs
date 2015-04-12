@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using LFC.Models;
+using System.Threading.Tasks;
 
 namespace RestClient
 {
@@ -27,16 +28,25 @@ namespace RestClient
             requestParams.Add(param, value);
         }
 
-        public string execute()
+        public async Task<string> execute()
         {
             addParameter("format", "json");
+            //var handler = new HttpClientHandler();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(serverUrl);
                 var content = new FormUrlEncodedContent(requestParams);
-                var result = client.PostAsync("/2.0/", content).Result;
-                string resultContent = result.Content.ReadAsStringAsync().Result;
-                return resultContent;
+                try
+                {
+                    var result =await client.PostAsync("/2.0/", content);
+                    var res = await result.Content.ReadAsStringAsync();
+                    return res;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                    throw e;
+                }           
             }
         }
     }
@@ -63,7 +73,7 @@ namespace RestClient
             request.addParameter("method", "user.GetInfo");
             request.addParameter("api_key", apiKey);
 
-            dynamic obj = JObject.Parse(request.execute());
+            dynamic obj = JObject.Parse(request.execute().ToString());
             return new LFCUser((JObject)obj.user);
         }
 
@@ -85,7 +95,7 @@ namespace RestClient
             request.addParameter("api_sig", api_sig);
             request.addParameter("sk", sk);
 
-            return request.execute();
+            return request.execute().ToString();
         }
 
         public string userGetFriends(string friend)
@@ -95,7 +105,7 @@ namespace RestClient
             request.addParameter("user", friend);
             request.addParameter("api_key", apiKey);
 
-            return request.execute();
+            return request.execute().Result;
         }
 
     }
@@ -107,7 +117,7 @@ namespace RestClient
         private string username;
         private string password;
         private bool auth;
-        private string secretKey;          // key, возвращаемый после удачной авторизации
+        private string secretKey = null;          // key, возвращаемый после удачной авторизации
 
         LFCRequest request;
 
@@ -125,7 +135,7 @@ namespace RestClient
             auth = true;
         }
 
-        public void getAuth()
+        public async Task<string> getAuth()
         {
             request.addParameter("method", "auth.getmobilesession");
             request.addParameter("username", username);
@@ -133,12 +143,36 @@ namespace RestClient
             request.addParameter("api_key", apiKey);
             request.addParameter("api_sig", getApiSig());
 
-            var response = request.execute();
-
+            var response =await request.execute();
+            //response.Wait(4000);
             Console.WriteLine("Response:\n {0}", response);
+            String sk = null;
 
-            dynamic obj = JObject.Parse(response);
-                secretKey = obj.session.key;
+            JObject json = JObject.Parse(response);
+            try
+            {
+                var token = json["error"];
+                if (token == null)
+                {
+                    sk = json["session"]["key"].ToString();
+                    secretKey = sk;
+                    return "Авторизация прошла успешно";
+                }
+                else
+                {
+                    var erroMsg = json["message"];
+                    return erroMsg.ToString();
+                }
+            }catch(NullReferenceException e)
+            {
+
+            }
+
+            //sk = json["session"]["key"].ToString ();
+
+            //dynamic obj = JObject.Parse(response);
+                //secretKey = sk;
+            return response;
         }
 
         public bool isAuth()

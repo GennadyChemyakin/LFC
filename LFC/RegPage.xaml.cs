@@ -9,6 +9,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using RestClient;
+using System.Threading.Tasks;
 
 
 namespace LFC
@@ -18,10 +20,19 @@ namespace LFC
         public RegPage()
         {
             InitializeComponent();
+            
         }
-        private void Enter_Click(object sender, RoutedEventArgs e)
+        private async void Enter_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            //UserName.Text = "GenaLovesMusic";
+            //Password.Password = "79522478648";
+            LFCAuth auth = new LFCAuth(UserName.Text, Password.Password);
+            var msg = await auth.getAuth();
+            MessageBox.Show(msg);
+            if(auth.getKey() != null)
+            {
+                NavigationService.Navigate(new Uri("/MainPage.xaml",UriKind.Relative));
+            }
         }
     }
    
