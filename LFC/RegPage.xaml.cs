@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using RestClient;
 using System.Threading.Tasks;
+using Microsoft.Phone.Tasks;
 
 
 namespace LFC
@@ -26,13 +27,29 @@ namespace LFC
         {
             //UserName.Text = "GenaLovesMusic";
             //Password.Password = "79522478648";
+            authProgress.IsIndeterminate = true;
             LFCAuth auth = new LFCAuth(UserName.Text, Password.Password);
             var msg = await auth.getAuth();
-            MessageBox.Show(msg);
+            //MessageBox.Show(msg);
             if (auth.Sk != null)
             {
+                authProgress.IsIndeterminate = false;
                 NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
+            else
+            {
+                authProgress.IsIndeterminate = false;
+                MessageBox.Show(msg);
+            }
+        }
+
+        private void Reg_Clicked(object sender, RoutedEventArgs e)
+        {
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+
+            webBrowserTask.Uri = new Uri("http://lastfm.ru/join", UriKind.Absolute);
+
+            webBrowserTask.Show();
         }
     }
 }
