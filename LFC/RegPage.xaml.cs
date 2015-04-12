@@ -21,6 +21,11 @@ namespace LFC
         public RegPage()
         {
             InitializeComponent();
+            Reg.Click += ((object sender, RoutedEventArgs e) => {
+                WebBrowserTask webBrowserTask = new WebBrowserTask();
+                webBrowserTask.Uri = new Uri("http://lastfm.ru/join", UriKind.Absolute);
+                webBrowserTask.Show();
+            });
 
         }
         private async void Enter_Click(object sender, RoutedEventArgs e)
@@ -41,13 +46,6 @@ namespace LFC
                 authProgress.IsIndeterminate = false;
                 MessageBox.Show(msg);
             }
-        }
-
-        private void Reg_Clicked(object sender, RoutedEventArgs e)
-        {
-            WebBrowserTask webBrowserTask = new WebBrowserTask();
-            webBrowserTask.Uri = new Uri("http://lastfm.ru/join", UriKind.Absolute);
-            webBrowserTask.Show();
         }
     }
 }
