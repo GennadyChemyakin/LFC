@@ -12,6 +12,8 @@ using System.Windows.Media.Effects;
 using RestClient;
 using System.Threading.Tasks;
 
+using RestClient;
+
 
 namespace LFC
 {
@@ -30,9 +32,8 @@ namespace LFC
             var msg = await auth.getAuth();
             MessageBox.Show(msg);
             if(auth.getKey() != null)
-            {
-                NavigationService.Navigate(new Uri("/MainPage.xaml",UriKind.Relative));
-            }
+        {
+           NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
     }
    
