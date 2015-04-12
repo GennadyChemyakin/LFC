@@ -9,7 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using RestClient;
+using LFC.Client;
 using System.Threading.Tasks;
 using Microsoft.Phone.Tasks;
 
@@ -46,9 +46,7 @@ namespace LFC
         private void Reg_Clicked(object sender, RoutedEventArgs e)
         {
             WebBrowserTask webBrowserTask = new WebBrowserTask();
-
             webBrowserTask.Uri = new Uri("http://lastfm.ru/join", UriKind.Absolute);
-
             webBrowserTask.Show();
         }
     }
