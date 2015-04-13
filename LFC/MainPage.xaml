@@ -125,28 +125,28 @@
 
             <!-- Friends -->
             <phone:PanoramaItem Header="Друзья" Foreground="Black">
-                <StackPanel x:Name="ruporSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="406">
-                    <ListBox x:Name="mylist" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="404" FontSize="20">
+                <StackPanel x:Name="friendSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ListBox x:Name="mylist" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" >
+                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" Width="450">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="128"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="200"/>
-                                        <ColumnDefinition Width="128"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="150"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid Grid.Row="1" Grid.Column="0">
+                                    <Grid Grid.Row="1" Grid.Column="0" Margin="0,30,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="32" />
                                             <RowDefinition Height="64" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="18" Foreground="Black" Width="250" Height="32"/>
-                                        <TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="24" Foreground="Black"  Width="200" Height="64" VerticalAlignment="Top"/>
+                                        <TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>
+                                        <TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" Height="64" VerticalAlignment="Top"/>
                                     </Grid>
                                         <Image Source="{Binding ImgMedium }" Width="128" Height="128"  Grid.Row="0" Grid.Column="1"></Image>
                                 </Grid>

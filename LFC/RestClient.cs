@@ -230,6 +230,18 @@ namespace LFC.Client
             }
         }
 
+        public string UserName
+        {
+            get
+            {
+                return username;
+            }
+            set
+            {
+                username = value;
+            }
+        }
+
         public LFCAuth(string user, string pass)
         {
             username = user;

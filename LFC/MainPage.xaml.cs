@@ -32,9 +32,10 @@ namespace LFC
             {
                 App.ViewModel.LoadData();
                 List<LFCUser> friends = new List<LFCUser>();
-                LFCAuth auth = new LFCAuth("GenaLovesMusic", "79522478648");
+                // LFCAuth auth = new LFCAuth("GenaLovesMusic", "79522478648");
+                LFCAuth auth = NavigationService.GetNavigationData() as LFCAuth;
                 Client.Client cl = new Client.Client(auth);
-                friends = await cl.userGetFriends("GenaLovesMusic");
+                friends = await cl.userGetFriends(auth.UserName);
                 mylist.ItemsSource = friends;
             }
         }
