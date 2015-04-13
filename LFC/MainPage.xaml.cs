@@ -14,31 +14,49 @@ namespace LFC
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        LFCAuth auth = new LFCAuth("","");
+        Client.Client client;
+        List<LFCUser> friends = new List<LFCUser>();
+        List<LFCShout> shouts = new List<LFCShout>();
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+            auth = NavigationService.GetNavigationData() as LFCAuth;
+            client = new Client.Client(auth);
+            
+            Main.SelectionChanged += Main_SelectionChanged;
+        }
 
-            // Set the data context of the listbox control to the sample data
-            //friends.Add(new LFCUser("name1", "realname1"));
-            //friends.Add(new LFCUser("name2", "realname2"));
-            //friends.Add(new LFCUser("name3", "realname3"));
+        async void Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (Main.SelectedIndex)
+            {
+                case 2:  // друзья
+                    //friendProgress.IsIndeterminate = true;
+                    friends = await client.userGetFriends(auth.UserName);
+                    friendsList.ItemsSource = friends;
+                    if (friends.Count == 0) MessageBox.Show("У тебя нет друзей :(");
+                    //friendProgress.IsIndeterminate = false;
+                    break;
+
+                case 3:  // рупор
+                    ruporProgress.IsIndeterminate = true;
+                    shouts = await client.userGetShouts(auth.UserName);
+                    ruporList.ItemsSource = shouts;
+                    //if (shouts.Count == 0) MessageBox.Show("Empty!");
+                    ruporProgress.IsIndeterminate = false;
+                    break;
+            }
         }
 
         // Load data for the ViewModel Items
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!App.ViewModel.IsDataLoaded)
             {
                 App.ViewModel.LoadData();
-                List<LFCUser> friends = new List<LFCUser>();
-                List<LFCShout> shouts = new List<LFCShout>();
-                LFCAuth auth = NavigationService.GetNavigationData() as LFCAuth;
-                Client.Client cl = new Client.Client(auth);
-                friends = await cl.userGetFriends(auth.UserName);
-                shouts = await cl.userGetShouts(auth.UserName);
-                mylist.ItemsSource = friends;
-                ruporList.ItemsSource = shouts;
             }
         }
     }
