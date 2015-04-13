@@ -45,7 +45,7 @@
             <!--Panorama item one-->
             <phone:PanoramaItem Header="Меню" Foreground="Black">
                 <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
-                                
+
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
                             <Hyperlink NavigateUri="/Settings.xaml">
@@ -93,7 +93,7 @@
             <phone:PanoramaItem Header="События" Foreground="Black" >
                 <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
 
-                    
+
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
@@ -122,18 +122,47 @@
                 </StackPanel>
 
             </phone:PanoramaItem>
-            
+
             <!-- Friends -->
+            <phone:PanoramaItem Header="Друзья" Foreground="Black">
+                <StackPanel x:Name="ruporSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="406">
+                    <ListBox x:Name="mylist" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="404" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="128"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="1" Grid.Column="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32" />
+                                            <RowDefinition Height="64" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="18" Foreground="Black" Width="250" Height="32"/>
+                                        <TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="24" Foreground="Black"  Width="200" Height="64" VerticalAlignment="Top"/>
+                                    </Grid>
+                                        <Image Source="{Binding ImgMedium }" Width="128" Height="128"  Grid.Row="0" Grid.Column="1"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </phone:PanoramaItem>
+
+            <!--Rupor-->
             <phone:PanoramaItem Header="Рупор" Foreground="Black">
 
             </phone:PanoramaItem>
+
             
             <!-- Library -->
-            <phone:PanoramaItem Header="Друзья" Foreground="Black">
-
-            </phone:PanoramaItem>
-            
-            <!--Rupor-->
             <phone:PanoramaItem Header="Библиотека" Orientation="Horizontal" Foreground="Black">
                 <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
 
@@ -176,7 +205,7 @@
                             </Hyperlink>
                         </Paragraph>
                     </RichTextBox>
-                    
+
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
                             <Hyperlink NavigateUri="/Settings.xaml">
@@ -186,16 +215,17 @@
                     </RichTextBox>
                 </StackPanel>
             </phone:PanoramaItem>
-            
-            <!-- Друзья -->
-            
+            <StackPanel HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
 
-            
+            <!-- Друзья -->
+
+
+
 
 
         </phone:Panorama>
-        
-        
+
+
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to

@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using LFC.Client;
+using LFC.Models;
 
 namespace LFC
 {
@@ -18,15 +20,22 @@ namespace LFC
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
-            DataContext = App.ViewModel;
+            //friends.Add(new LFCUser("name1", "realname1"));
+            //friends.Add(new LFCUser("name2", "realname2"));
+            //friends.Add(new LFCUser("name3", "realname3"));
         }
 
         // Load data for the ViewModel Items
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!App.ViewModel.IsDataLoaded)
             {
                 App.ViewModel.LoadData();
+                List<LFCUser> friends = new List<LFCUser>();
+                LFCAuth auth = new LFCAuth("GenaLovesMusic", "79522478648");
+                Client.Client cl = new Client.Client(auth);
+                friends = await cl.userGetFriends("GenaLovesMusic");
+                mylist.ItemsSource = friends;
             }
         }
     }
