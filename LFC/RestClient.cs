@@ -162,7 +162,7 @@ namespace LFC.Client
             return friends;
         }
 
-        public List<LFCShout> userGetShouts(string user)
+        public async Task<List<LFCShout>> userGetShouts(string user)
         {
             List<LFCShout> s = new List<LFCShout>();
             var request = new LFCRequest();
@@ -172,7 +172,8 @@ namespace LFC.Client
 
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic shouts = obj.shouts.shout;
-            JObject json = JObject.Parse(request.execute().ToString());
+            var response =await request.execute();
+            JObject json = JObject.Parse(response);
             var shouts = json["shouts"]["shout"];
             try
             {

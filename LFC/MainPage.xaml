@@ -156,9 +156,37 @@
                 </StackPanel>
             </phone:PanoramaItem>
 
-            <!--Rupor-->
+           <!--Rupor-->
             <phone:PanoramaItem Header="Рупор" Foreground="Black">
-
+                <StackPanel x:Name="ruporSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ListBox x:Name="ruporList" ItemsSource="{Binding shouts}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" Width="450">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Body }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                                    <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Author }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>
+                                        <TextBlock Text="{Binding Date }"  Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontSize="16" Foreground="Black" Height="64" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </phone:PanoramaItem>
 
             

@@ -58,8 +58,6 @@ namespace LFC
         }
         private async void Enter_Click(object sender, RoutedEventArgs e)
         {
-            //UserName.Text = "GenaLovesMusic";
-            //Password.Password = "79522478648";
             authProgress.IsIndeterminate = true;
             LFCAuth auth = new LFCAuth(UserName.Text, Password.Password);
             var msg = await auth.getAuth();
