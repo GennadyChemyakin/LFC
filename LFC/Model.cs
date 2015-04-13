@@ -42,6 +42,10 @@ namespace LFC.Models
                 if (image["size"].ToString() == "small") imgSmall = image["#text"].ToString();
                 if (image["size"].ToString() == "medium") imgMedium = image["#text"].ToString();
             }
+            if(ImgMedium.Length == 0)
+            {
+                ImgMedium = "Assets/duckLFC.png";
+            }
         }
 
         public override String ToString()

@@ -61,6 +61,10 @@ namespace LFC.Client
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             sk = auth.Sk;
         }
+        public Client()
+        {
+
+        }
 
         //public LFCUser userGetInfo(string username)
         //{
@@ -122,9 +126,7 @@ namespace LFC.Client
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
 
-            //MD5.MD5 md = new MD5.MD5(requestString);
             string api_sig = MD5Core.GetHashString(requestString);
-            //string api_sig = md.FingerPrint;
             var request = new LFCRequest();
             request.addParameter("method", "user.shout");
             request.addParameter("user", user);
@@ -135,7 +137,7 @@ namespace LFC.Client
             return request.execute().ToString();
         }
 
-        public List<LFCUser> userGetFriends(string friend)
+        public async Task<List<LFCUser>> userGetFriends(string friend)
         {
             List<LFCUser> friends = new List<LFCUser>();
             var request = new LFCRequest();
@@ -146,7 +148,8 @@ namespace LFC.Client
 
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic users = obj.friends.user;
-            JObject json = JObject.Parse(request.execute().ToString());
+            var response = await request.execute();
+            JObject json = JObject.Parse(response);
             var users = json["friends"]["user"];
             try
             {
@@ -210,7 +213,7 @@ namespace LFC.Client
     class LFCAuth
     {
         private string apiKey;
-        private string secretApiKey;        // secret key из аккаунта разработчика
+        private string secretApiKey;       // secret key из аккаунта разработчика
         private string username;
         private string password;
         private string secretKey;          // key, возвращаемый после удачной авторизации
@@ -234,9 +237,6 @@ namespace LFC.Client
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             secretApiKey = "96bd810a71249530b5f3831cd09f43d1";
             request = new LFCRequest();
-
-            // TODO: доставать sk из ответа и проверять авторизовались ли вообще
-            // и кидать исключение может быть
         }
 
         public async Task<string> getAuth()
@@ -248,7 +248,6 @@ namespace LFC.Client
             request.addParameter("api_sig", getApiSig());
 
             var response =await request.execute();
-            //response.Wait(4000);
             Console.WriteLine("Response:\n {0}", response);
             String sk = null;
 
@@ -271,38 +270,15 @@ namespace LFC.Client
             {
                 throw e;
             }
-
-            //sk = json["session"]["key"].ToString ();
-
-            // dynamic obj = JObject.Parse(response);
-            // secretKey = obj.session.key
             return response;
         }
 
-        //public string getKey()
-        //{
-        //    return sk;
-        //}
-
         public string getApiSig()
         {
-            //MD5 md5Hash = MD5.Create();
             string requestString = "api_key" + apiKey +
                                    "methodauth.getmobilesession" + "password" +
                                    password + "username" + username + secretApiKey;
-            //return getMd5Hash(md5Hash, requestString);
             return MD5Core.GetHashString(requestString);
         }
-
-        //public static string getMd5Hash(MD5 md5Hash, string input)
-        //{
-        //    byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-        //    StringBuilder sBuilder = new StringBuilder();
-        //    for (int i = 0; i < data.Length; i++)
-        //    {
-        //        sBuilder.Append(data[i].ToString("x2"));
-        //    }
-        //    return sBuilder.ToString();
-        //}
     }
 }
