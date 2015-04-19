@@ -54,9 +54,9 @@ namespace LFC
             if (!App.ViewModel.IsDataLoaded)
             {
                 App.ViewModel.LoadData();
-                auth = NavigationService.GetNavigationData().ElementAt(0) as LFCAuth;
-                client = new Client.Client(auth);
             }
+            auth = NavigationService.GetNavigationData().ElementAt(0) as LFCAuth;
+            client = new Client.Client(auth);
         }
 
         private void linkToFriendProfile_Click(object sender, RoutedEventArgs e)

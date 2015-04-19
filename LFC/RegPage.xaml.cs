@@ -18,7 +18,6 @@ namespace LFC
 {
     public static class Extensions
     {
-        private static object Data;
         private static List<object> DataArray = new List<object>();
 
         /// <summary>
@@ -31,6 +30,7 @@ namespace LFC
         public static void Navigate(this NavigationService navigationService,
                                     Uri source, object data)
         {
+            DataArray.Clear();
             DataArray.Add(data);
             navigationService.Navigate(source);
         }
