@@ -172,6 +172,15 @@ namespace LFC.Models
     public class LFCEvent
     {
         #region
+
+        string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
         string title;
 
         public string Title
@@ -226,6 +235,7 @@ namespace LFC.Models
         public LFCEvent(JObject obj)
         {
             title = obj.Value<string>("title");
+            id = obj.Value<string>("id");
             var a = obj.Value<JToken>("artists")["artist"];
             if (!a.HasValues)
                 artist.Add(a.Value<string>());
@@ -251,6 +261,7 @@ namespace LFC.Models
             str += "Desc: " + desc + Environment.NewLine;
             str += "Image: " + image + Environment.NewLine;
             str += "Canceled: " + canceled + Environment.NewLine;
+            str += "ID: " + id + Environment.NewLine;
             return str;
         }
     }
