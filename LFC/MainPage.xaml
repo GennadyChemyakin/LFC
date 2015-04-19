@@ -89,10 +89,12 @@
                 </StackPanel>
             </phone:PanoramaItem>
 
+            <!--Events-->
+
             <!-- Friends -->
             <phone:PanoramaItem Header="Друзья" Foreground="Black">
                 <StackPanel x:Name="friendSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
-                    <ProgressBar x:Name="friendProgress" HorizontalAlignment="Left" Height="11" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
+                    <ProgressBar x:Name="friendProgress" HorizontalAlignment="Left" Height="13" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
                     <ListBox x:Name="friendsList" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
