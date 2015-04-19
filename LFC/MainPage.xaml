@@ -90,43 +90,11 @@
             </phone:PanoramaItem>
 
             <!--Events-->
-            <phone:PanoramaItem Header="События" Foreground="Black" >
-                <StackPanel HorizontalAlignment="Left" Height="475" VerticalAlignment="Top" Width="404" Orientation="Vertical">
-
-
-
-                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
-                        <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
-                                <Run Text="Твои события" FontSize="35" Foreground="black" TextDecorations="None"/>
-                            </Hyperlink>
-                        </Paragraph>
-                    </RichTextBox>
-
-                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
-                        <Paragraph>
-                            <Hyperlink NavigateUri="/Library.xaml">
-                                <Run Text="События друзей" FontSize="35" Foreground="black" TextDecorations="None"/>
-                            </Hyperlink>
-                        </Paragraph>
-                    </RichTextBox>
-
-                    <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="92">
-                        <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
-                                <Run Text="Добавленные тобой события" FontSize="35" Foreground="black" TextDecorations="None"/>
-                            </Hyperlink>
-                        </Paragraph>
-                    </RichTextBox>
-
-                </StackPanel>
-
-            </phone:PanoramaItem>
 
             <!-- Friends -->
             <phone:PanoramaItem Header="Друзья" Foreground="Black">
                 <StackPanel x:Name="friendSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
-                    <ProgressBar x:Name="friendProgress" HorizontalAlignment="Left" Height="11" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
+                    <ProgressBar x:Name="friendProgress" HorizontalAlignment="Left" Height="13" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
                     <ListBox x:Name="friendsList" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

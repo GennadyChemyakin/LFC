@@ -18,9 +18,9 @@ namespace LFC.Client
         private Dictionary<string, string> requestParams;
 
 
-        public LFCRequest()
+        public LFCRequest(string su = "https://ws.audioscrobbler.com")
         {
-            serverUrl = "https://ws.audioscrobbler.com";
+            serverUrl = su;
             requestParams = new Dictionary<string,string>();
         }
 
@@ -175,10 +175,19 @@ namespace LFC.Client
             var response =await request.execute();
             JObject json = JObject.Parse(response);
             var shouts = json["shouts"]["shout"];
+            var count = json["shouts"]["@attr"].Value<int>("total");
             try
             {
-                foreach (JObject shout in shouts)
-                    s.Add(new LFCShout(shout));
+                if (count < 2)
+                {
+                    if (count == 0)
+                        return s;
+                    if (count == 1)
+                        s.Add(new LFCShout(shouts.Value<JObject>()));
+                }
+                else
+                    foreach (JObject shout in shouts)
+                        s.Add(new LFCShout(shout));
             }
             catch (NullReferenceException e)         // если shout нет
             {
@@ -186,7 +195,7 @@ namespace LFC.Client
             return s;
         }
 
-        public List<LFCTrack> userGetRecentTracks(string user)
+        public async Task<List<LFCTrack>> userGetRecentTracks(string user)
         {
             List<LFCTrack> s = new List<LFCTrack>();
             var request = new LFCRequest();
@@ -197,7 +206,7 @@ namespace LFC.Client
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic tracks = obj.recenttracks.track;
 
-            JObject json = JObject.Parse(request.execute().ToString());
+            JObject json = JObject.Parse(await request.execute());
             var tracks = json["recenttracks"]["tracks"];
             try
             {
@@ -209,6 +218,30 @@ namespace LFC.Client
             }
             return s;
         }
+
+        public async Task<List<LFCEvent>> geoGetEvents(string lat, string lon, string tag = "")
+        {
+            List<LFCEvent> e = new List<LFCEvent>();
+            var request = new LFCRequest();
+            request.addParameter("method", "geo.GetEvents");
+            request.addParameter("long", lon);
+            request.addParameter("lat", lat);
+            request.addParameter("distance", "50");
+            request.addParameter("api_key", apiKey);
+            var resp = await request.execute();
+            JObject json = JObject.Parse(resp);
+            var events = json["events"]["event"];
+            //try
+            //{
+                foreach (JObject ev in events)
+                    e.Add(new LFCEvent(ev));
+            //}
+            //catch (NullReferenceException ex) { throw ex; }
+
+            return e;
+            //return request.execute();
+        }
+
     }
 
     class LFCAuth
