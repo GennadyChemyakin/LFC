@@ -186,7 +186,7 @@ namespace LFC.Client
             return s;
         }
 
-        public List<LFCTrack> userGetRecentTracks(string user)
+        public async Task<List<LFCTrack>> userGetRecentTracks(string user)
         {
             List<LFCTrack> s = new List<LFCTrack>();
             var request = new LFCRequest();
@@ -197,7 +197,7 @@ namespace LFC.Client
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic tracks = obj.recenttracks.track;
 
-            JObject json = JObject.Parse(request.execute().ToString());
+            JObject json = JObject.Parse(await request.execute());
             var tracks = json["recenttracks"]["tracks"];
             try
             {
@@ -209,6 +209,31 @@ namespace LFC.Client
             }
             return s;
         }
+
+        public async Task<List<LFCEvent>> geoGetEvents(string lon, string lat, string tag = "")
+        {
+            List<LFCEvent> e = new List<LFCEvent>();
+            var request = new LFCRequest();
+            request.addParameter("method", "geo.GetEvents");
+            request.addParameter("long", lon);
+            request.addParameter("lat", lat);
+            request.addParameter("distance", "50");
+            request.addParameter("location", "Sankt-Peterburg");
+            request.addParameter("api_key", apiKey);
+            var resp = await request.execute();
+            JObject json = JObject.Parse(resp);
+            var events = json["events"]["event"];
+            try
+            {
+            foreach (JObject ev in events)
+                e.Add(new LFCEvent(ev));
+            }
+            catch (NullReferenceException ex) { throw ex; }
+
+            return e;
+            //return request.execute();
+        }
+
     }
 
     class LFCAuth
