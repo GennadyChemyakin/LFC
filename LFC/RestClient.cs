@@ -18,9 +18,9 @@ namespace LFC.Client
         private Dictionary<string, string> requestParams;
 
 
-        public LFCRequest()
+        public LFCRequest(string su = "https://ws.audioscrobbler.com")
         {
-            serverUrl = "https://ws.audioscrobbler.com";
+            serverUrl = su;
             requestParams = new Dictionary<string,string>();
         }
 
@@ -210,7 +210,7 @@ namespace LFC.Client
             return s;
         }
 
-        public async Task<List<LFCEvent>> geoGetEvents(string lon, string lat, string tag = "")
+        public async Task<List<LFCEvent>> geoGetEvents(string lat, string lon, string tag = "")
         {
             List<LFCEvent> e = new List<LFCEvent>();
             var request = new LFCRequest();
@@ -218,17 +218,16 @@ namespace LFC.Client
             request.addParameter("long", lon);
             request.addParameter("lat", lat);
             request.addParameter("distance", "50");
-            request.addParameter("location", "Sankt-Peterburg");
             request.addParameter("api_key", apiKey);
             var resp = await request.execute();
             JObject json = JObject.Parse(resp);
             var events = json["events"]["event"];
-            try
-            {
-            foreach (JObject ev in events)
-                e.Add(new LFCEvent(ev));
-            }
-            catch (NullReferenceException ex) { throw ex; }
+            //try
+            //{
+                foreach (JObject ev in events)
+                    e.Add(new LFCEvent(ev));
+            //}
+            //catch (NullReferenceException ex) { throw ex; }
 
             return e;
             //return request.execute();
