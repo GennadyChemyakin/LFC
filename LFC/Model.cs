@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace LFC.Models
 {
@@ -165,6 +166,103 @@ namespace LFC.Models
             str.Append("Date: " + Date + Environment.NewLine);
 
             return str.ToString();
+        }
+    }
+
+    public class LFCEvent
+    {
+        #region
+
+        string id;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        string title;
+
+        public string Title
+        {
+            get { return title; }
+            set { title = value; }
+        }
+        List<string> artist = new List<string>();
+
+        public List<string> Artist
+        {
+            get { return artist; }
+            set { artist = value; }
+        }
+        string venue;
+
+        public string Venue
+        {
+            get { return venue; }
+            set { venue = value; }
+        }
+        string image;   // картинка события
+
+        public string Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+        DateTime startDate;
+
+        public DateTime StartDate
+        {
+            get { return startDate; }
+            set { startDate = value; }
+        }
+        string desc;
+
+        public string Desc
+        {
+            get { return desc; }
+            set { desc = value; }
+        }
+        bool canceled;  // отменено или нет
+
+        public bool Canceled
+        {
+            get { return canceled; }
+            set { canceled = value; }
+        }
+        #endregion
+
+        public LFCEvent(JObject obj)
+        {
+            title = obj.Value<string>("title");
+            id = obj.Value<string>("id");
+            var a = obj.Value<JToken>("artists")["artist"];
+            if (!a.HasValues)
+                artist.Add(a.Value<string>());
+            else
+                artist.AddRange(a.Values<string>());
+            venue = obj.Value<JObject>("venue")["name"].ToString();
+            startDate = DateTime.Parse(obj.Value<string>("startDate"));
+            desc = obj.Value<string>("description");
+            image = obj.Value<JArray>("image")[3]["#text"].Value<string>();
+            canceled = obj.Value<bool>("canseled");
+        }
+
+
+        public override string ToString()
+        {
+            String str = "";
+            str += Title + Environment.NewLine;
+            str += "Artists: \n";
+            foreach (string s in artist)
+                str += s + Environment.NewLine;
+            str += "Venue: " + venue + Environment.NewLine;
+            str += "Date: " + startDate + Environment.NewLine;
+            str += "Desc: " + desc + Environment.NewLine;
+            str += "Image: " + image + Environment.NewLine;
+            str += "Canceled: " + canceled + Environment.NewLine;
+            str += "ID: " + id + Environment.NewLine;
+            return str;
         }
     }
 }

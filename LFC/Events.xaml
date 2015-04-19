@@ -15,7 +15,7 @@
 
     <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
     <Grid x:Name="LayoutRoot">
-        <phone:Panorama Title="Last.fm" >
+        <phone:Panorama Title="Last.fm" x:Name="Main" >
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
@@ -26,14 +26,16 @@
             </phone:PanoramaItem>
 
             <!--Второй элемент Panorama-->
-            <phone:PanoramaItem Header="События друзей" Foreground="Black">
-                <Grid/>
+            <phone:PanoramaItem Header="Рекомендованные" Foreground="Black">
+                <Grid>
+                    <ProgressBar Name="recommendPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
+                </Grid>
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Добавленные" Foreground="Black">
                 <Grid/>
             </phone:PanoramaItem>
-            
+
         </phone:Panorama>
     </Grid>
 

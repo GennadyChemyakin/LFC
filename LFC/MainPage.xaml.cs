@@ -22,7 +22,7 @@ namespace LFC
         // Constructor
         public MainPage()
         {
-            InitializeComponent();           
+            InitializeComponent();
             Main.SelectionChanged += Main_SelectionChanged;
         }
 
@@ -31,11 +31,11 @@ namespace LFC
             switch (Main.SelectedIndex)
             {
                 case 2:  // друзья
-                    //friendProgress.IsIndeterminate = true;
+                    friendProgress.IsIndeterminate = true;
                     friends = await client.userGetFriends(auth.UserName);
                     friendsList.ItemsSource = friends;
                     if (friends.Count == 0) MessageBox.Show("У тебя нет друзей :(");
-                    //friendProgress.IsIndeterminate = false;
+                    friendProgress.IsIndeterminate = false;
                     break;
 
                 case 3:  // рупор

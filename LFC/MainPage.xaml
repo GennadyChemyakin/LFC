@@ -163,7 +163,7 @@
                                                 </Hyperlink>
                                             </Paragraph>
                                         </RichTextBox>
-                                      </Grid>
+                                    </Grid>
                                     <Image Source="{Binding ImgMedium }" Width="128" Height="128"  Grid.Row="0" Grid.Column="1"></Image>
                                 </Grid>
                             </DataTemplate>
