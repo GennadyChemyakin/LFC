@@ -37,7 +37,8 @@
          -->
 
         <!--Panorama control-->
-        <phone:Panorama Title="" x:Name="Main">
+        <phone:Panorama Title="
+                        " x:Name="Main">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
@@ -260,7 +261,6 @@
                     </RichTextBox>
                 </StackPanel>
             </phone:PanoramaItem>
-            <StackPanel HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
 
             <!-- Друзья -->
 
