@@ -159,7 +159,7 @@
                                         </RichTextBox>
                                         <RichTextBox IsReadOnly="True"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="64" VerticalAlignment="Top">
                                             <Paragraph>
-                                                <Hyperlink Name="rlinkToFriendProfile" NavigateUri="/Friend.xaml">
+                                                <Hyperlink Name="rlinkToFriendProfile" Click="rlinkToFriendProfile_Click">
                                                     <Run Text="{Binding RealName }" FontSize="26" Foreground="Black" TextDecorations="None"/>
                                                 </Hyperlink>
                                             </Paragraph>

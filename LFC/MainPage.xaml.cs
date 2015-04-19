@@ -75,5 +75,22 @@ namespace LFC
                 }
             }
         }
+
+        private void rlinkToFriendProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            foreach (LFCUser user in friends)
+            {
+                if (user.RealName.Equals(str))
+                {
+                    List<object> objList = new List<object>();
+                    objList.Add(auth);
+                    objList.Add(user);
+                    NavigationService.Navigate(new Uri("/Friend.xaml", UriKind.Relative), objList);
+                }
+            }
+        }
     }
 }
