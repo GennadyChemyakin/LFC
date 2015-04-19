@@ -146,9 +146,24 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>
-                                        <TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" Height="64" VerticalAlignment="Top"/>
-                                    </Grid>
+                              
+                                        <!--<TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>-->
+                                        <!--<TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" Height="64" VerticalAlignment="Top"/>-->
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="32">
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToFriendProfile" Click="linkToFriendProfile_Click">
+                                                    <Run Text="{Binding Name }" FontSize="20" Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="64" VerticalAlignment="Top">
+                                            <Paragraph>
+                                                <Hyperlink Name="rlinkToFriendProfile" NavigateUri="/Friend.xaml">
+                                                    <Run Text="{Binding RealName }" FontSize="26" Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                      </Grid>
                                     <Image Source="{Binding ImgMedium }" Width="128" Height="128"  Grid.Row="0" Grid.Column="1"></Image>
                                 </Grid>
                             </DataTemplate>

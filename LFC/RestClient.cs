@@ -121,7 +121,7 @@ namespace LFC.Client
             return new LFCUser((JObject)obj["user"]);
         }
 
-        public string userShout(string user, string message)
+        public async Task<string> userShout(string user, string message)
         {
             string requestString = "api_key" + apiKey + "message" + message +
                                    "methoduser.shout" + "sk" + sk + "user" + user + "96bd810a71249530b5f3831cd09f43d1";
@@ -134,7 +134,8 @@ namespace LFC.Client
             request.addParameter("api_key", apiKey);
             request.addParameter("api_sig", api_sig);
             request.addParameter("sk", sk);
-            return request.execute().ToString();
+            var response = await request.execute();
+            return response;
         }
 
         public async Task<List<LFCUser>> userGetFriends(string friend)

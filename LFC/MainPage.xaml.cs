@@ -14,7 +14,7 @@ namespace LFC
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        LFCAuth auth = new LFCAuth("","");
+        LFCAuth auth;
         Client.Client client;
         List<LFCUser> friends = new List<LFCUser>();
         List<LFCShout> shouts = new List<LFCShout>();
@@ -22,10 +22,7 @@ namespace LFC
         // Constructor
         public MainPage()
         {
-            InitializeComponent();
-            auth = NavigationService.GetNavigationData() as LFCAuth;
-            client = new Client.Client(auth);
-            
+            InitializeComponent();           
             Main.SelectionChanged += Main_SelectionChanged;
         }
 
@@ -57,6 +54,25 @@ namespace LFC
             if (!App.ViewModel.IsDataLoaded)
             {
                 App.ViewModel.LoadData();
+                auth = NavigationService.GetNavigationData().ElementAt(0) as LFCAuth;
+                client = new Client.Client(auth);
+            }
+        }
+
+        private void linkToFriendProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            foreach(LFCUser user in friends)
+            {
+                if (user.Name.Equals(str))
+                {
+                    List<object> objList = new List<object>();
+                    objList.Add(auth);
+                    objList.Add(user);
+                    NavigationService.Navigate(new Uri("/Friend.xaml", UriKind.Relative), objList);
+                }
             }
         }
     }

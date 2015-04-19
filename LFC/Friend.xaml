@@ -15,19 +15,126 @@
 
     <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
     <Grid x:Name="LayoutRoot">
-        <phone:Panorama Title="Last.fm" >
+        <phone:Panorama Title="Last.fm" Name="FriendPanorama">
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
             <!--Первый элемент Panorama-->
-            <phone:PanoramaItem Header="item1" Foreground="Black">
-                <Grid/>
+            <phone:PanoramaItem Header="Профиль" Foreground="Black">
+                <StackPanel x:Name="Profile" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar x:Name="profileProgress" HorizontalAlignment="Left" Height="11" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
+                    <Grid Name="grid"  Margin="10,0,10,8" Background="{x:Null}" Width="450">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="240"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="1" Margin="0,30,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="64" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Name="NameBlock" Text="test" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="32" Foreground="Black" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            <TextBlock Name="RealNameBlock" Text="test"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" Height="64" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Image Name="UserImg" Source="url" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                        <HyperlinkButton Name="FriendBlock" Click="FriendBlock_Click" Content="Друзей: 0" Grid.Row="1" Grid.Column="1"  FontSize="40" Height="128" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <HyperlinkButton Name="MailBlock" Content="Отправить&#10;Сообщение" Click="MailBlock_Click" Grid.Row="1" Grid.Column="0"  FontSize="25" Height="128" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    </Grid>
+                </StackPanel>
             </phone:PanoramaItem>
 
             <!--Второй элемент Panorama-->
-            <phone:PanoramaItem Header="item2" Foreground="Black">
-                <Grid/>
+            <phone:PanoramaItem Header="Рупор" Foreground="Black">
+                <StackPanel x:Name="ruporSP" HorizontalAlignment="Left" Height="505" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar x:Name="ruporProgress" HorizontalAlignment="Left" Height="11" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
+                    <ListBox x:Name="ruporList" ItemsSource="{Binding shouts}"  Margin="10,0,-10,0" Height="296" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" Width="450">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Body }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" VerticalAlignment="Top" Margin="0,0,0,20"/>
+                                    <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Author }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>
+                                        <TextBlock Text="{Binding Date }"  Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontSize="16" Foreground="Black" Height="64" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <TextBox x:Name="mail" Height="100" Margin="0,0,20,0" BorderBrush = "#BF000000"/>
+                    <Button Content="Отправить сообщение" Name="sendMail" Foreground="Black" BorderBrush="Black" Margin="0,0,20,0" Click="sendMail_Click"/>
+                </StackPanel>
+            </phone:PanoramaItem>
+
+            <!--Третий элемент Panorama-->
+            <phone:PanoramaItem Header="Друзья" Foreground="Black">
+                <StackPanel x:Name="friendSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar x:Name="friendProgress" HorizontalAlignment="Left" Height="11" Margin="0,0,0,0" VerticalAlignment="Top" Width="450"/>
+                    <ListBox x:Name="friendsList" ItemsSource="{Binding friends}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Name="grid" Margin="10,0,10,8" Background="{x:Null}" Width="450">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="128"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="1" Grid.Column="0" Margin="0,30,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="32" />
+                                            <RowDefinition Height="64" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--<TextBlock Text="{Binding Name }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>-->
+                                        <!--<TextBlock Text="{Binding RealName }"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black" Height="64" VerticalAlignment="Top"/>-->
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="32">
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToFriendProfile" Click="linkToFriendProfile_Click">
+                                                    <Run Text="{Binding Name }" FontSize="20" Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="64" VerticalAlignment="Top">
+                                            <Paragraph>
+                                                <Hyperlink Name="rlinkToFriendProfile" NavigateUri="/Friend.xaml">
+                                                    <Run Text="{Binding RealName }" FontSize="26" Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                    </Grid>
+                                    <Image Source="{Binding ImgMedium }" Width="128" Height="128"  Grid.Row="0" Grid.Column="1"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </phone:PanoramaItem>
         </phone:Panorama>
     </Grid>

@@ -19,6 +19,7 @@ namespace LFC
     public static class Extensions
     {
         private static object Data;
+        private static List<object> DataArray = new List<object>();
 
         /// <summary>
         /// Navigates to the content specified by uniform resource identifier (URI).
@@ -30,7 +31,14 @@ namespace LFC
         public static void Navigate(this NavigationService navigationService,
                                     Uri source, object data)
         {
-            Data = data;
+            DataArray.Add(data);
+            navigationService.Navigate(source);
+        }
+
+        public static void Navigate(this NavigationService navigationService,
+                                    Uri source, List<object> data)
+        {
+            DataArray = data;
             navigationService.Navigate(source);
         }
 
@@ -39,9 +47,9 @@ namespace LFC
         /// </summary>
         /// <param name="service">The service.</param>
         /// <returns>System.Object.</returns>
-        public static object GetNavigationData(this NavigationService service)
+        public static List<object> GetNavigationData(this NavigationService service)
         {
-            return Data;
+            return DataArray;
         }
     }
     public partial class RegPage : PhoneApplicationPage
