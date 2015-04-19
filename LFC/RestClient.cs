@@ -174,13 +174,17 @@ namespace LFC.Client
             //dynamic shouts = obj.shouts.shout;
             var response =await request.execute();
             JObject json = JObject.Parse(response);
+            var shouts = json["shouts"]["shout"];
+            var count = json["shouts"]["@attr"].Value<int>("total");
             try
             {
-                var count = json["shouts"]["@attr"].Value<int>("total");
-                var shouts = json["shouts"]["shout"];
-                if (count == 1)
-                    s.Add(new LFCShout(shouts.Value<JObject>()));
-                if (count == 0) { }
+                if (count < 2)
+                {
+                    if (count == 0)
+                        return s;
+                    if (count == 1)
+                        s.Add(new LFCShout(shouts.Value<JObject>()));
+                }
                 else
                     foreach (JObject shout in shouts)
                         s.Add(new LFCShout(shout));
