@@ -30,7 +30,7 @@ namespace LFC
         {
             switch (Main.SelectedIndex)
             {
-                case 2:  // друзья
+                case 1:  // друзья
                     friendProgress.IsIndeterminate = true;
                     friends = await client.userGetFriends(auth.UserName);
                     friendsList.ItemsSource = friends;
@@ -38,7 +38,7 @@ namespace LFC
                     friendProgress.IsIndeterminate = false;
                     break;
 
-                case 3:  // рупор
+                case 2:  // рупор
                     ruporProgress.IsIndeterminate = true;
                     shouts = await client.userGetShouts(auth.UserName);
                     ruporList.ItemsSource = shouts;
