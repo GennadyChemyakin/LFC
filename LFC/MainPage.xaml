@@ -65,7 +65,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Events.xaml">
+                            <Hyperlink Name ="linkToEvents" Click="linkToEvents_Click">
                                 <Run Text="События" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>

@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using System.IO;
 using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using LFC.Models;
 using System.Threading.Tasks;
-using System.Collections;
 
 namespace LFC.Client
 {
@@ -241,6 +237,45 @@ namespace LFC.Client
 
             return e;
             //return request.execute();
+        }
+
+        public async Task<List<LFCEvent>> userGetEvents(string user)
+        {
+            List<LFCEvent> e = new List<LFCEvent>();
+            var request = new LFCRequest();
+            request.addParameter("method", "user.getEvents");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+            var resp = await request.execute();
+            JObject json = JObject.Parse(resp);
+            var events = json["events"]["event"];
+            var count = 0;
+            try
+            {
+                count = json["events"]["@attr"].Value<int>("total");
+            }
+            catch (NullReferenceException ex)
+            {
+            }
+
+            try
+            {
+                if (count < 2)
+                {
+                    if (count == 0)
+                        return e;
+                    if (count == 1)
+                        e.Add(new LFCEvent(events.Value<JObject>()));
+                }
+                else
+                    foreach (JObject ev in events)
+                        e.Add(new LFCEvent(ev));
+            }
+            catch (NullReferenceException ex)         // если shout нет
+            {
+            }
+            return e;
         }
 
     }

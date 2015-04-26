@@ -23,14 +23,83 @@
 
             <!--Первый элемент Panorama-->
             <phone:PanoramaItem Header="Твои события" Foreground="Black">
-                <Grid/>
+                <StackPanel x:Name="yourEventSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar Name="yourEventPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
+
+                    <ListBox x:Name="yourEventList" ItemsSource="{Binding yourEvents}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="128"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="128"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToEventInfo" Click="linkToEventInfo1_Click">
+                                                    <!--<Run Text="{Binding Name }" FontSize="20" Foreground="Black" TextDecorations="None"/>-->
+                                                    <Run Text="{Binding Title }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        
+                                        <TextBlock Text="{Binding Artist }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
+                                    </Grid>
+                                    <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </phone:PanoramaItem>
 
             <!--Второй элемент Panorama-->
             <phone:PanoramaItem Header="Рекомендованные" Foreground="Black">
-                <Grid>
-                    <ProgressBar Name="recommendPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
-                </Grid>
+                <StackPanel x:Name="recEventSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar Name="recEventPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
+
+                    <ListBox x:Name="recEventList" ItemsSource="{Binding recEvents}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="128"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="128"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToEventInfo22" Click="linkToEventInfo2_Click">
+                                                    <Run Text="{Binding Title }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+
+                                        <TextBlock Text="{Binding Artist }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
+                                    </Grid>
+                                    <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </phone:PanoramaItem>
 
             <phone:PanoramaItem Header="Добавленные" Foreground="Black">

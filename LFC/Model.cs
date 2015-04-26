@@ -2,6 +2,7 @@
 using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace LFC.Models
 {
@@ -188,9 +189,9 @@ namespace LFC.Models
             get { return title; }
             set { title = value; }
         }
-        List<string> artist = new List<string>();
+        ArtistList artist = new ArtistList();
 
-        public List<string> Artist
+        public ArtistList Artist
         {
             get { return artist; }
             set { artist = value; }
@@ -230,6 +231,15 @@ namespace LFC.Models
             get { return canceled; }
             set { canceled = value; }
         }
+
+        bool attended;
+
+        public bool Attended
+        {
+            get { return attended; }
+            set { attended = value; }
+        }
+
         #endregion
 
         public LFCEvent(JObject obj)
@@ -244,8 +254,10 @@ namespace LFC.Models
             venue = obj.Value<JObject>("venue")["name"].ToString();
             startDate = DateTime.Parse(obj.Value<string>("startDate"));
             desc = obj.Value<string>("description");
+            desc = Regex.Replace(desc, @"<(.|\n)*?>", string.Empty);
             image = obj.Value<JArray>("image")[3]["#text"].Value<string>();
             canceled = obj.Value<bool>("canseled");
+            attended = true;
         }
 
 
@@ -263,6 +275,18 @@ namespace LFC.Models
             str += "Canceled: " + canceled + Environment.NewLine;
             str += "ID: " + id + Environment.NewLine;
             return str;
+        }
+    }
+
+    public class ArtistList : List<string>
+    {
+        public ArtistList() : base() { }
+        public override string ToString()
+        {
+            var str = new StringBuilder();
+            foreach (string value in this)
+                str.Append(value + " ");
+            return str.ToString();
         }
     }
 }

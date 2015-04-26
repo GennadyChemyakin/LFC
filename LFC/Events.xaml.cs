@@ -1,25 +1,27 @@
-﻿using System;
+﻿using LFC.Client;
+using LFC.Models;
+using Microsoft.Phone.Controls;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Phone.Controls;
-using LFC.Client;
-using LFC.Models;
+using System.Windows.Navigation;
 using Windows.Devices.Geolocation;
-using System.Threading.Tasks;
-using Microsoft.Phone.Maps.Services;
-using Newtonsoft.Json.Linq;
 
 namespace LFC
 {
     public partial class Events : PhoneApplicationPage
     {
-        LFCAuth auth = new LFCAuth("", "");
+        LFCAuth auth;// = new LFCAuth("", "");
         Client.Client client;
+        List<LFCEvent> recommendedEvents = new List<LFCEvent>();
+        List<LFCEvent> yourEvents = new List<LFCEvent>();
         public Events()
         {
             InitializeComponent();
-            client = new Client.Client(auth);
+            //client = new Client.Client(auth);
             Main.SelectionChanged += Main_SelectionChanged;
         }
 
@@ -63,20 +65,67 @@ namespace LFC
             switch (Main.SelectedIndex)
             {
                 case 0:  // твои события
+                    yourEventPB.IsIndeterminate = true;
+                    yourEvents = await client.userGetEvents("kiselevsergey");
+                    yourEventList.ItemsSource = yourEvents;
+                    yourEventPB.IsIndeterminate = false;
                     break;
 
                 case 1: // рекомендованные
-                    recommendPB.IsIndeterminate = true;
+                    recEventPB.IsIndeterminate = true;
                     Geoposition geoposition = await getGeo();
                     double lat = geoposition.Coordinate.Point.Position.Latitude;
                     double lon = geoposition.Coordinate.Point.Position.Longitude;
-                    var resp = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
-
-                    foreach (var ev in resp)
-                        MessageBox.Show(ev.ToString());
-                    recommendPB.IsIndeterminate = false;
-
+                    recommendedEvents = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
+                    recEventList.ItemsSource = recommendedEvents;
+                    recEventPB.IsIndeterminate = false;
                     break;
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (!App.ViewModel.IsDataLoaded)
+            {
+                App.ViewModel.LoadData();
+            }
+            auth = NavigationService.GetNavigationData().ElementAt(0) as LFCAuth;
+            client = new Client.Client(auth);
+            Main.SetValue(Panorama.SelectedItemProperty, Main.Items[0]);
+        }
+
+        private void linkToEventInfo1_Click(object sender, RoutedEventArgs e) // твои события
+        {
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            foreach (LFCEvent ev in yourEvents)
+            {
+                if (ev.Title == str)
+                {
+                    List<object> objList = new List<object>();
+                    ev.Attended = false;
+                    objList.Add(auth);
+                    objList.Add(ev);
+                    NavigationService.Navigate(new Uri("/EventInfo.xaml", UriKind.Relative), objList);
+                }
+            }
+        }
+
+        private void linkToEventInfo2_Click(object sender, RoutedEventArgs e) // рекомендованные
+        {
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            foreach (LFCEvent ev in recommendedEvents)
+            {
+                if (ev.Title == str)
+                {
+                    List<object> objList = new List<object>();
+                    objList.Add(auth);
+                    objList.Add(ev);
+                    NavigationService.Navigate(new Uri("/EventInfo.xaml", UriKind.Relative), objList);
+                }
             }
         }
     }
