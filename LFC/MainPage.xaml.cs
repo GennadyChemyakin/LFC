@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using LFC.Client;
 using LFC.Models;
 
 namespace LFC
 {
+
     public partial class MainPage : PhoneApplicationPage
     {
         LFCAuth auth;
@@ -91,6 +90,16 @@ namespace LFC
                     NavigationService.Navigate(new Uri("/Friend.xaml", UriKind.Relative), objList);
                 }
             }
+        }
+
+        private void linkToEvents_Click(object sender, RoutedEventArgs e)
+        {
+            var link = sender as System.Windows.Documents.Hyperlink;
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(auth.UserName);
+            NavigationService.Navigate(new Uri("/Events.xaml", UriKind.Relative), objList);
+
         }
     }
 }

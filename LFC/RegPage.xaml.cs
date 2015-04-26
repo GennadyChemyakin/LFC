@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System.Windows.Media;
-using System.Windows.Media.Effects;
 using LFC.Client;
-using System.Threading.Tasks;
 using Microsoft.Phone.Tasks;
 
 
@@ -61,8 +54,7 @@ namespace LFC
                 WebBrowserTask webBrowserTask = new WebBrowserTask();
                 webBrowserTask.Uri = new Uri("http://lastfm.ru/join", UriKind.Absolute);
                 webBrowserTask.Show();
-            });
-
+              });
         }
         private async void Enter_Click(object sender, RoutedEventArgs e)
         {
