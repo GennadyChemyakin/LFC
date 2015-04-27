@@ -57,7 +57,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink Click="Friend_Hyperlink_Click">
                                 <Run Text="Друзья" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>
@@ -214,7 +214,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink NavigateUri="/Library.xaml">
                                 <Run Text="Рекомендации" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>
@@ -222,7 +222,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink NavigateUri="/Library.xaml">
                                 <Run Text="Музыка" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>
@@ -230,7 +230,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink NavigateUri="/Library.xaml">
                                 <Run Text="Любимые" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>
@@ -246,7 +246,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink NavigateUri="/Library.xaml">
                                 <Run Text="Плейлисты" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>
@@ -254,7 +254,7 @@
 
                     <RichTextBox IsReadOnly="True" Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="65">
                         <Paragraph>
-                            <Hyperlink NavigateUri="/Settings.xaml">
+                            <Hyperlink NavigateUri="/Library.xaml">
                                 <Run Text="Теги" FontSize="35" Foreground="black" TextDecorations="None"/>
                             </Hyperlink>
                         </Paragraph>

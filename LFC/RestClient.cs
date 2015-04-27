@@ -134,6 +134,21 @@ namespace LFC.Client
             return response;
         }
 
+        public async Task<string> userMusicCompare(string user1, string user2)
+        {            
+            var request = new LFCRequest();
+            request.addParameter("method", "tasteometer.compare");
+            request.addParameter("type1", "user");
+            request.addParameter("type2", "user");
+            request.addParameter("value1", user1);
+            request.addParameter("value2", user2);
+            request.addParameter("api_key", apiKey);
+            var response = await request.execute();
+            JObject json = JObject.Parse(response);
+            var score = json["comparison"]["result"]["score"];
+            return score.ToString();
+        }
+
         public async Task<List<LFCUser>> userGetFriends(string friend)
         {
             List<LFCUser> friends = new List<LFCUser>();

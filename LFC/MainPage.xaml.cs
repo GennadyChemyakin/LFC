@@ -101,5 +101,10 @@ namespace LFC
             NavigationService.Navigate(new Uri("/Events.xaml", UriKind.Relative), objList);
 
         }
+
+        private void Friend_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Main.DefaultItem = Main.Items[1];
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace LFC
             {
                 case 0:  // твои события
                     yourEventPB.IsIndeterminate = true;
-                    yourEvents = await client.userGetEvents("kiselevsergey");
+                    yourEvents = await client.userGetEvents(auth.UserName);
                     yourEventList.ItemsSource = yourEvents;
                     yourEventPB.IsIndeterminate = false;
                     break;

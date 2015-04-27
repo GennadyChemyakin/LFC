@@ -72,9 +72,14 @@ namespace LFC
             NameBlock.Text = friend.Name;
             RealNameBlock.Text = friend.RealName;
             UserImg.Source = new BitmapImage(new Uri(friend.ImgMedium, UriKind.RelativeOrAbsolute));
-
+            profileProgress.IsIndeterminate = true;
             friends = await client.userGetFriends(friend.Name);
             FriendBlock.Content = "Друзей: " + friends.Count;
+
+            var score = await client.userMusicCompare(auth.UserName, friend.Name);
+            profileProgress.IsIndeterminate = false;
+            Music_Slider.Value = (int)(double.Parse(score) * 100);
+            MusciBlock.Text = "Музыкальная совместимость " + (int)(double.Parse(score) * 100) + "%";
 
         }
 

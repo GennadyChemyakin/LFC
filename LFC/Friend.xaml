@@ -29,6 +29,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="128"/>
                             <RowDefinition Height="128"/>
+                            <RowDefinition Height="128"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160"/>
@@ -48,6 +49,8 @@
                         <Image Name="UserImg" Source="url" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                         <HyperlinkButton Name="FriendBlock" Click="FriendBlock_Click" Content="Друзей: 0" Grid.Row="1" Grid.Column="1"  FontSize="40" Height="128" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <HyperlinkButton Name="MailBlock" Content="Отправить&#10;Сообщение" Click="MailBlock_Click" Grid.Row="1" Grid.Column="0"  FontSize="25" Height="128" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Slider Name="Music_Slider" Minimum="0" Maximum="100" Grid.Row="2" Grid.Column="1" Margin="0,0,-24,0"/>
+                        <TextBlock Name="MusciBlock" Text="Музыкальная&#10;совместимость: 0" Grid.Row="2" Grid.Column="1"  TextWrapping="Wrap" FontSize="25" Height="80" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="21,48,-24,0" Width="243"/>
 
                     </Grid>
                 </StackPanel>
