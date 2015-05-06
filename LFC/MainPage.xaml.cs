@@ -117,7 +117,7 @@ namespace LFC
 
         private void linkToSenderProfile_Click(object sender, RoutedEventArgs e)
         {
-
+            linkToFriendProfile_Click(sender, e);
         }
     }
 }

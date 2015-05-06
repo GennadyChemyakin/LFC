@@ -197,9 +197,9 @@
                                             <ColumnDefinition />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="32">
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20" Foreground="Black"  Background="Transparent">
                                             <Paragraph>
-                                                <Hyperlink Name="linkToSenderProfile" Click="linkToSenderProfile_Click">
+                                                <Hyperlink Name="linkToSenderProfile" Click="linkToFriendProfile_Click">
                                                     <Run Text="{Binding Author }" FontSize="20" Foreground="Black" TextDecorations="None"/>
                                                 </Hyperlink>
                                             </Paragraph>
