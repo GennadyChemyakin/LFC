@@ -197,7 +197,14 @@
                                             <ColumnDefinition />
                                             <ColumnDefinition />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Author }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="20" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" Height="32">
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToSenderProfile" Click="linkToSenderProfile_Click">
+                                                    <Run Text="{Binding Author }" FontSize="20" Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <!--<TextBlock Text="{Binding Author }" Grid.Row="0" Grid.Column="0"  TextWrapping="Wrap" FontSize="20" Height="64" Foreground="Black"/>-->
                                         <TextBlock Text="{Binding Date }"  Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" FontSize="16" Foreground="Black" Height="64" VerticalAlignment="Top"/>
                                     </Grid>
                                 </Grid>
