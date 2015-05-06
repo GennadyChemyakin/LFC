@@ -114,10 +114,5 @@ namespace LFC
         {
             Main.DefaultItem = Main.Items[1];
         }
-
-        private void linkToSenderProfile_Click(object sender, RoutedEventArgs e)
-        {
-            linkToFriendProfile_Click(sender, e);
-        }
     }
 }
