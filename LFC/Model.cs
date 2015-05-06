@@ -298,6 +298,8 @@ namespace LFC.Models
         private string summary;
         private string publish;
         private string content;
+        public string plays;
+        public string listeners;
         #region
         public string Name
         {
@@ -341,7 +343,10 @@ namespace LFC.Models
             summary = obj.Value<JArray>("bio")["summary"].Value<string>();
             publish = obj.Value<JArray>("bio")["published"].Value<string>();
             content = obj.Value<JArray>("bio")["content"].Value<string>();
+            listeners = obj.Value<JArray>("stats")["listeners"].Value<string>();
+            plays = obj.Value<JArray>("stats")["plays"].Value<string>();
         }
+
         public override string ToString()
         {
             String str = "";
@@ -352,6 +357,8 @@ namespace LFC.Models
             str += "  Published: " + summary + Environment.NewLine;
             str += "  Summary: " + summary + Environment.NewLine;
             str += "  Content: " + content + Environment.NewLine;
+            str += "Listeners: " + listeners + Environment.NewLine;
+            str += "Plays: " + plays + Environment.NewLine;
             return str;
         }
     }
