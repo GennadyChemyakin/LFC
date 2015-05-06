@@ -185,11 +185,12 @@ namespace LFC.Client
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic shouts = obj.shouts.shout;
             var response =await request.execute();
-            JObject json = JObject.Parse(response);
-            var shouts = json["shouts"]["shout"];
-            var count = json["shouts"]["@attr"].Value<int>("total");
             try
-            {
+            { 
+                JObject json = JObject.Parse(response);
+                var shouts = json["shouts"]["shout"];
+                var count = json["shouts"]["@attr"].Value<int>("total");
+            
                 if (count < 2)
                 {
                     if (count == 0)
@@ -203,6 +204,7 @@ namespace LFC.Client
             }
             catch (NullReferenceException e)         // если shout нет
             {
+                throw e;
             }
             return s;
         }

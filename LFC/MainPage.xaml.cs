@@ -39,8 +39,16 @@ namespace LFC
 
                 case 2:  // рупор
                     ruporProgress.IsIndeterminate = true;
-                    shouts = await client.userGetShouts(auth.UserName);
-                    ruporList.ItemsSource = shouts;
+                    try
+                    {
+                        shouts = await client.userGetShouts(auth.UserName);
+                        ruporList.ItemsSource = shouts;
+                    }
+                    catch (NullReferenceException err)
+                    {
+                        MessageBox.Show("Empty!");
+                        Console.Write(err.StackTrace);
+                    }
                     //if (shouts.Count == 0) MessageBox.Show("Empty!");
                     ruporProgress.IsIndeterminate = false;
                     break;

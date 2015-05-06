@@ -42,8 +42,16 @@ namespace LFC
                     break;
                 case 1:  // рупор
                     ruporProgress.IsIndeterminate = true;
-                    shouts = await client.userGetShouts(friend.Name);
-                    ruporList.ItemsSource = shouts;
+                    try
+                    {
+                        shouts = await client.userGetShouts(friend.Name);
+                        ruporList.ItemsSource = shouts;
+
+                    }
+                    catch(NullReferenceException err)
+                    {
+                        Console.Write(err.StackTrace);
+                    }
                     if (shouts.Count == 0) MessageBox.Show("Этому пользователю никто не пишет :(");
                     ruporProgress.IsIndeterminate = false;
                     break;
