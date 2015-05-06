@@ -104,7 +104,13 @@ namespace LFC.Client
 
         //    return request.execute().Result;
         //}
-
+        public LFCArtist artistGetInfo(string artistName)
+        {
+            var request = new LFCRequest();
+            request.addParameter("artist",artistName);
+            JObject obj = JObject.Parse(request.execute().ToString());
+            return new LFCArtist((JObject)obj["artist"]);
+        }
         public LFCUser userGetInfo(string username)
         {
             var request = new LFCRequest();
