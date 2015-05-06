@@ -289,4 +289,70 @@ namespace LFC.Models
             return str.ToString();
         }
     }
+    public class LFCArtist
+    {
+
+        private string name;
+        private string url;
+        private string image;
+        private string summary;
+        private string publish;
+        private string content;
+        #region
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+        public string Url
+        {
+            get { return url; }
+            set { url = value; }
+        }
+        public string Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
+
+        public string Summary
+        {
+            get { return summary; }
+            set { summary = value; }
+        }
+        public string Publish
+        {
+            get { return publish; }
+            set { publish = value; }
+        }
+        public string Content
+        {
+            get { return content; }
+            set { content = value; }
+        }
+        #endregion
+
+        public LFCArtist(JObject obj)
+        {
+            name = obj.Value<string>("name");
+            url = obj.Value<string>("url");
+            image = obj.Value<JArray>("image")[3]["#text"].Value<string>();
+            summary = obj.Value<JArray>("bio")["summary"].Value<string>();
+            publish = obj.Value<JArray>("bio")["published"].Value<string>();
+            content = obj.Value<JArray>("bio")["content"].Value<string>();
+        }
+        public override string ToString()
+        {
+            String str = "";
+            str += "Artist name: " + name + Environment.NewLine;
+            str += "Page url: " + url + Environment.NewLine;
+            str += "Image: " + image + Environment.NewLine;
+            str += "Bio: " + Environment.NewLine;
+            str += "  Published: " + summary + Environment.NewLine;
+            str += "  Summary: " + summary + Environment.NewLine;
+            str += "  Content: " + content + Environment.NewLine;
+            return str;
+        }
+    }
 }
