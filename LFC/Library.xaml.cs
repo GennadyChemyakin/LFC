@@ -28,6 +28,12 @@ namespace LFC
         {
             switch (LibraryPanorama.SelectedIndex)
             {
+                case 0: // рекомендации
+                    break;
+                case 1: // музыка
+                    break;
+                case 2: // любимые
+                    break;
                 case 3: // недавние
                     recentPlayLPB.IsIndeterminate = true;
                     tracks = await client.userGetRecentTracks(auth.UserName);

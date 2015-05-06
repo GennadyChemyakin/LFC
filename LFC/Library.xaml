@@ -21,7 +21,7 @@
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
 
-            <!--Первый элемент Panorama-->
+            <!--Рекомендации-->
             <phone:PanoramaItem Header="Рекомендации" Foreground="Black" >
                 <StackPanel x:Name="yourRecomSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
                     <ProgressBar Name="yourRecomPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
@@ -42,7 +42,16 @@
                                             <RowDefinition />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
+                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
+                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -50,7 +59,7 @@
                 </StackPanel>
             </phone:PanoramaItem>
 
-            <!--Второй элемент Panorama-->
+            <!--Музыка-->
             <phone:PanoramaItem Header="Музыка" Foreground="Black" >
                 <StackPanel x:Name="yourMusicSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
                     <ProgressBar Name="yourMusicPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
@@ -71,7 +80,16 @@
                                             <RowDefinition />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
+                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
+                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -100,7 +118,16 @@
                                             <RowDefinition />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
+                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
+                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -132,7 +159,6 @@
                                         <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
                                             <Paragraph>
                                                 <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
-                                                    <!--<Run Text="{Binding Name }" FontSize="20" Foreground="Black" TextDecorations="None"/>-->
                                                     <Run Text="{Binding Artist }"  Foreground="Black" TextDecorations="None"/>
                                                 </Hyperlink>
                                             </Paragraph>
@@ -140,35 +166,6 @@
                                         <TextBlock Text="{Binding Name }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
                                     <Image Source="{Binding ImgExtraLarge }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </phone:PanoramaItem>
-
-            <!-- Теги -->
-            <phone:PanoramaItem Header="Теги" Foreground="Black" >
-                <StackPanel x:Name="yourTagSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
-                    <ProgressBar Name="yourTagPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
-
-                    <ListBox x:Name="yourTagList" ItemsSource="{Binding yourTag}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="128"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="128"/>
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                    </Grid>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

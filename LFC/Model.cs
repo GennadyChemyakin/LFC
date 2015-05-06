@@ -152,7 +152,6 @@ namespace LFC.Models
             Artist = obj.Value<JObject>("artist")["#text"].ToString();
             Name = obj.Value<string>("name");
             Album = obj.Value<JObject>("album")["#text"].ToString();
-            Date = DateTime.Parse(obj.Value<JObject>("date")["#text"].ToString());
 
             var a = obj.Value<JArray>("image");
             foreach (var image in a)
