@@ -135,6 +135,12 @@ namespace LFC.Models
             set { imgLarge = value; }
         }
 
+        public string ImgExtraLarge
+        {
+            get { return imgExtraLarge; }
+            set { imgExtraLarge = value; }
+        }
+
         public DateTime Date
         {
             get { return date; }
@@ -149,13 +155,18 @@ namespace LFC.Models
             Date = DateTime.Parse(obj.Value<JObject>("date")["#text"].ToString());
 
             var a = obj.Value<JArray>("image");
-            foreach (JArray image in a)
+            foreach (var image in a)
             {
                 if (image["size"].ToString() == "small") imgSmall = image["#text"].ToString();
                 if (image["size"].ToString() == "medium") imgMedium = image["#text"].ToString();
                 if (image["size"].ToString() == "large") imgLarge = image["#text"].ToString();
                 if (image["size"].ToString() == "extralarge") imgExtraLarge = image["#text"].ToString();
             }
+        }
+
+        public LFCTrack()
+        {
+            // TODO: Complete member initialization
         }
 
         public override string ToString()

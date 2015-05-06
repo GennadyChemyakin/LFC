@@ -221,13 +221,13 @@ namespace LFC.Client
             //dynamic tracks = obj.recenttracks.track;
 
             JObject json = JObject.Parse(await request.execute());
-            var tracks = json["recenttracks"]["tracks"];
+            var tracks = json["recenttracks"]["track"];
             try
             {
                 foreach (JObject track in tracks)
                     s.Add(new LFCTrack(track));
             }
-            catch(NullReferenceException e)         // если треков нет
+            catch (NullReferenceException e)         // если треков нет
             {
             }
             return s;
