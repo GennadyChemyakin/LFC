@@ -106,10 +106,21 @@ namespace LFC.Client
         //}
         public LFCArtist artistGetInfo(string artistName)
         {
-            var request = new LFCRequest();
-            request.addParameter("artist",artistName);
-            JObject obj = JObject.Parse(request.execute().ToString());
-            return new LFCArtist((JObject)obj["artist"]);
+            try
+            {
+                var request = new LFCRequest();
+                request.addParameter("artist", artistName);
+                JObject obj = JObject.Parse(request.execute().ToString());
+                return new LFCArtist((JObject)obj["artist"]);
+            }
+            catch (NullReferenceException e) 
+            {
+                throw e;
+            }
+            catch (InvalidCastException e)
+            {
+                throw e;
+            }
         }
         public LFCUser userGetInfo(string username)
         {
