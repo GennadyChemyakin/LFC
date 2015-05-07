@@ -212,6 +212,14 @@ namespace LFC.Client
             return s;
         }
 
+        public LFCArtist artistGetInfo(string artistName)
+        {
+            var request = new LFCRequest();
+            request.addParameter("artist", artistName);
+            JObject obj = JObject.Parse(request.execute().ToString());
+            return new LFCArtist((JObject)obj["artist"]);
+        }
+
         public async Task<List<LFCTrack>> userGetRecentTracks(string user)
         {
             List<LFCTrack> s = new List<LFCTrack>();
