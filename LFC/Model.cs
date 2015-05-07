@@ -44,7 +44,7 @@ namespace LFC.Models
                 if (image["size"].ToString() == "small") imgSmall = image["#text"].ToString();
                 if (image["size"].ToString() == "medium") imgMedium = image["#text"].ToString();
             }
-            if(ImgMedium.Length == 0)
+            if (ImgMedium.Length == 0)
             {
                 ImgMedium = "Assets/duckLFC.png";
             }
@@ -97,6 +97,9 @@ namespace LFC.Models
         private string imgMedium;
         private string imgLarge;
         private string imgExtraLarge;
+        private int playcount;
+        private string trackUrl;
+        private string artistUrl;
         private DateTime date;
 
         public string Artist
@@ -111,10 +114,28 @@ namespace LFC.Models
             set { name = value; }
         }
 
+        public int Playcount
+        {
+            get { return playcount; }
+            set { playcount = value; }
+        }
+
         public string Album
         {
             get { return album; }
             set { album = value; }
+        }
+
+        public string ArtistUrl
+        {
+            get { return artistUrl; }
+            set { artistUrl = value; }
+        }
+
+        public string TrackUrl
+        {
+            get { return trackUrl; }
+            set { trackUrl = value; }
         }
 
         public string ImgSmall
@@ -156,6 +177,11 @@ namespace LFC.Models
                 if (image["size"].ToString() == "large") imgLarge = image["#text"].ToString();
                 if (image["size"].ToString() == "extralarge") imgExtraLarge = image["#text"].ToString();
             }
+        }
+
+        public LFCTrack()
+        {
+
         }
 
         public override string ToString()
@@ -298,8 +324,7 @@ namespace LFC.Models
         private string summary;
         private string publish;
         private string content;
-        public string plays;
-        public string listeners;
+        private int playcount;
         #region
         public string Name
         {
@@ -315,6 +340,12 @@ namespace LFC.Models
         {
             get { return image; }
             set { image = value; }
+        }
+
+        public int Playcount
+        {
+            get { return playcount; }
+            set { playcount = value; }
         }
 
 
@@ -343,10 +374,12 @@ namespace LFC.Models
             summary = obj.Value<JArray>("bio")["summary"].Value<string>();
             publish = obj.Value<JArray>("bio")["published"].Value<string>();
             content = obj.Value<JArray>("bio")["content"].Value<string>();
-            listeners = obj.Value<JArray>("stats")["listeners"].Value<string>();
-            plays = obj.Value<JArray>("stats")["plays"].Value<string>();
         }
 
+        public LFCArtist()
+        {
+
+        }
         public override string ToString()
         {
             String str = "";
@@ -357,9 +390,130 @@ namespace LFC.Models
             str += "  Published: " + summary + Environment.NewLine;
             str += "  Summary: " + summary + Environment.NewLine;
             str += "  Content: " + content + Environment.NewLine;
-            str += "Listeners: " + listeners + Environment.NewLine;
-            str += "Plays: " + plays + Environment.NewLine;
             return str;
+        }
+    }
+
+    class LFCAlbum
+    {
+        private string name;
+        private int playcount;
+        private string albumUrl;
+        private string artistName;
+        private string imageLarge;
+        private string imageMedium;
+        private string imageSmall;
+        private string artistUrl;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
+        public int Playcount
+        {
+            get
+            {
+                return playcount;
+            }
+
+            set
+            {
+                playcount = value;
+            }
+        }
+
+        public string Url
+        {
+            get
+            {
+                return albumUrl;
+            }
+
+            set
+            {
+                albumUrl = value;
+            }
+        }
+
+        
+
+        public string ArtistName
+        {
+            get
+            {
+                return artistName;
+            }
+
+            set
+            {
+                artistName = value;
+            }
+        }
+
+
+        public string ImageLarge
+        {
+            get
+            {
+                return imageLarge;
+            }
+
+            set
+            {
+                imageLarge = value;
+            }
+        }
+
+        public string ImageMedium
+        {
+            get
+            {
+                return imageMedium;
+            }
+
+            set
+            {
+                imageMedium = value;
+            }
+        }
+
+        public string ImageSmall
+        {
+            get
+            {
+                return imageSmall;
+            }
+
+            set
+            {
+                imageSmall = value;
+            }
+        }
+
+        public string ArtistUrl
+        {
+            get
+            {
+                return artistUrl;
+            }
+
+            set
+            {
+                artistUrl = value;
+            }
+        }
+
+        public LFCAlbum()
+        {
         }
     }
 }

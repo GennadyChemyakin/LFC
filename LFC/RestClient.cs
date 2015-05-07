@@ -17,7 +17,7 @@ namespace LFC.Client
         public LFCRequest()
         {
             serverUrl = "https://ws.audioscrobbler.com";
-            requestParams = new Dictionary<string,string>();
+            requestParams = new Dictionary<string, string>();
         }
 
         public void addParameter(string param, string value)
@@ -34,7 +34,7 @@ namespace LFC.Client
                 var content = new FormUrlEncodedContent(requestParams);
                 try
                 {
-                    var result =await client.PostAsync("/2.0/", content);
+                    var result = await client.PostAsync("/2.0/", content);
                     var res = await result.Content.ReadAsStringAsync();
                     return res;
                 }
@@ -42,7 +42,7 @@ namespace LFC.Client
                 {
                     Console.WriteLine(e.StackTrace);
                     throw e;
-                }           
+                }
             }
         }
     }
@@ -104,13 +104,7 @@ namespace LFC.Client
 
         //    return request.execute().Result;
         //}
-        public LFCArtist artistGetInfo(string artistName)
-        {
-            var request = new LFCRequest();
-            request.addParameter("artist",artistName);
-            JObject obj = JObject.Parse(request.execute().ToString());
-            return new LFCArtist((JObject)obj["artist"]);
-        }
+
         public LFCUser userGetInfo(string username)
         {
             var request = new LFCRequest();
@@ -141,7 +135,7 @@ namespace LFC.Client
         }
 
         public async Task<string> userMusicCompare(string user1, string user2)
-        {            
+        {
             var request = new LFCRequest();
             request.addParameter("method", "tasteometer.compare");
             request.addParameter("type1", "user");
@@ -176,9 +170,12 @@ namespace LFC.Client
             }
             catch (NullReferenceException e)         // если друзей нет
             {
+                throw e;
             }
             return friends;
         }
+
+
 
         public async Task<List<LFCShout>> userGetShouts(string user)
         {
@@ -190,13 +187,13 @@ namespace LFC.Client
 
             //dynamic obj = JObject.Parse(request.execute());
             //dynamic shouts = obj.shouts.shout;
-            var response =await request.execute();
+            var response = await request.execute();
             try
-            { 
+            {
                 JObject json = JObject.Parse(response);
                 var shouts = json["shouts"]["shout"];
                 var count = json["shouts"]["@attr"].Value<int>("total");
-            
+
                 if (count < 2)
                 {
                     if (count == 0)
@@ -205,8 +202,8 @@ namespace LFC.Client
                         s.Add(new LFCShout(shouts.Value<JObject>()));
                 }
                 else
-                foreach (JObject shout in shouts)
-                    s.Add(new LFCShout(shout));
+                    foreach (JObject shout in shouts)
+                        s.Add(new LFCShout(shout));
             }
             catch (NullReferenceException e)         // если shout нет
             {
@@ -233,12 +230,138 @@ namespace LFC.Client
                 foreach (JObject track in tracks)
                     s.Add(new LFCTrack(track));
             }
-            catch(NullReferenceException e)         // если треков нет
+            catch (NullReferenceException e)         // если треков нет
             {
+                throw e;
             }
             return s;
         }
 
+        public async Task<List<LFCArtist>> libraryGetArtists(string user)
+        {
+            List<LFCArtist> s = new List<LFCArtist>();
+            var request = new LFCRequest();
+            request.addParameter("method", "library.getArtists");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+            try
+            {
+                JObject json = JObject.Parse(await request.execute());
+                var artists = json["artists"]["artist"];
+
+                foreach (JObject artist in artists)
+                {
+                    LFCArtist a = new LFCArtist();
+                    a.Name = artist.Value<string>("name");
+                    a.Playcount = artist.Value<int>("playcount");
+                    a.Url = artist.Value<string>("url");
+                    a.Image = artist.Value<JArray>("image")[3]["#text"].Value<string>();
+                    s.Add(a);
+                }
+
+
+            }
+            catch (NullReferenceException e)         // если нет
+            {
+                throw e;
+            }
+            return s;
+        }
+
+        public async Task<List<LFCTrack>> libraryGetTracks(string user)
+        {
+            List<LFCTrack> s = new List<LFCTrack>();
+            var request = new LFCRequest();
+            request.addParameter("method", "library.getTracks");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+
+            try
+            {
+                JObject json = JObject.Parse(await request.execute());
+                var tracks = json["tracks"]["track"];
+
+                foreach (JObject track in tracks)
+                {
+                    LFCTrack a = new LFCTrack();
+                    a.Name = track.Value<string>("name");
+                    a.Playcount = track.Value<int>("playcount");
+                    a.TrackUrl = track.Value<string>("url");
+                    a.Artist = track.Value<JToken>("artist").Value<string>("name");
+                    a.ArtistUrl = track.Value<JToken>("artist").Value<string>("url");
+                    a.ImgLarge = track.Value<JArray>("image")[3]["#text"].Value<string>();
+                    s.Add(a);
+                }
+
+
+            }
+            catch (NullReferenceException e)         // если нет
+            {
+                throw e;
+            }
+            return s;
+        }
+
+        public async Task<List<LFCAlbum>> libraryGetAlbums(string user)
+        {
+            List<LFCAlbum> s = new List<LFCAlbum>();
+            var request = new LFCRequest();
+            request.addParameter("method", "library.getAlbums");
+            request.addParameter("user", user);
+            request.addParameter("api_key", apiKey);
+
+
+            try
+            {
+                JObject json = JObject.Parse(await request.execute());
+                var albums = json["albums"]["album"];
+
+                foreach (JObject album in albums)
+                {
+                    LFCAlbum a = new LFCAlbum();
+                    a.Name = album.Value<string>("name");
+                    a.Playcount = album.Value<int>("playcount");
+                    a.Url = album.Value<string>("url");
+                    a.ArtistName = album.Value<JToken>("artist").Value<string>("name");
+                    a.ArtistUrl = album.Value<JToken>("artist").Value<string>("url");
+                    a.ImageLarge = album.Value<JArray>("image")[3]["#text"].Value<string>();
+                    s.Add(a);
+                }
+
+
+            }
+            catch (NullReferenceException e)         // если нет
+            {
+                throw e;
+            }
+            return s;
+        }
+
+        public async Task<bool> libraryAddArtist(string artist)
+        {
+            string requestString = "api_key" + apiKey + "artist" + artist +
+                                   "methodlibrary.addArtist" + "sk" + sk + "96bd810a71249530b5f3831cd09f43d1";
+
+            string api_sig = MD5Core.GetHashString(requestString);
+            var request = new LFCRequest();
+            request.addParameter("method", "library.addArtist");
+            request.addParameter("artist", artist);
+            request.addParameter("api_key", apiKey);
+            request.addParameter("api_sig", api_sig);
+            request.addParameter("sk", sk);
+
+            var response = await request.execute();
+            var json = JObject.Parse(response);
+            var result = json["status"];
+
+            if (result.Value<string>().Equals("ok"))
+                return true;
+            else return false;
+
+
+        }
         public async Task<List<LFCEvent>> geoGetEvents(string lat, string lon, string tag = "")
         {
             List<LFCEvent> e = new List<LFCEvent>();
@@ -253,8 +376,8 @@ namespace LFC.Client
             var events = json["events"]["event"];
             //try
             //{
-                foreach (JObject ev in events)
-                    e.Add(new LFCEvent(ev));
+            foreach (JObject ev in events)
+                e.Add(new LFCEvent(ev));
             //}
             //catch (NullReferenceException ex) { throw ex; }
 
@@ -280,6 +403,7 @@ namespace LFC.Client
             }
             catch (NullReferenceException ex)
             {
+                throw ex;
             }
 
             try
@@ -297,6 +421,7 @@ namespace LFC.Client
             }
             catch (NullReferenceException ex)         // если shout нет
             {
+                throw ex;
             }
             return e;
         }
@@ -352,7 +477,7 @@ namespace LFC.Client
             request.addParameter("api_key", apiKey);
             request.addParameter("api_sig", getApiSig());
 
-            var response =await request.execute();
+            var response = await request.execute();
             Console.WriteLine("Response:\n {0}", response);
             String sk = null;
 
@@ -371,7 +496,8 @@ namespace LFC.Client
                     var erroMsg = json["message"];
                     return erroMsg.ToString();
                 }
-            }catch(NullReferenceException e)
+            }
+            catch (NullReferenceException e)
             {
                 throw e;
             }
