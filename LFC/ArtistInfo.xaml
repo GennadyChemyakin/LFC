@@ -20,17 +20,55 @@
             <phone:Panorama.Background>
                 <ImageBrush ImageSource="/LFC;component/Assets/PanoramaBackground.png"/>
             </phone:Panorama.Background>
+            <phone:PanoramaItem Header="Исполнитель" Foreground="Black" RenderTransformOrigin="0.48,0.489" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox Name="EventInfoGrid">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="e">
+                                <Grid.RowDefinitions>
+                                    <!--картинка-->
+                                    <RowDefinition />
+                                    <!--информация-->
+                                    <RowDefinition />
+                                    <!--описание-->
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-            <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+                                <Image x:Name="Img" Source="{Binding Image}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Height="229" VerticalAlignment="Top"/>
+                                <Grid Grid.Row="1" Margin="0,20,0,0">
+                                    <Grid.RowDefinitions>
+                                        <!--title-->
+                                        <RowDefinition />
+                                        <!--artist-->
+                                        <RowDefinition />
+                                        <!--date-->
+                                        <RowDefinition />
+                                        <!--venue-->
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="140"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
-        </Grid>
+                                    <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" TextWrapping="Wrap" Text="Имя исполнителя" VerticalAlignment="Top" Foreground="Black"/>
+                                    <TextBlock x:Name="ArtistNameText"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Foreground="Black"/>
+                                    <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Опубликовано" VerticalAlignment="Top" Foreground="Black" />
+                                    <TextBlock x:Name="PublishedText" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Publish, StringFormat='{}{0:dd MMM yyyy}'}" VerticalAlignment="Top" Foreground="Black"/>
+                                    <TextBlock HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Foreground="Black"/>
+                                   
+                                   
+                                </Grid>
+                                <TextBlock x:Name="ContentText" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Content}" VerticalAlignment="Top" Foreground="Black"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </phone:PanoramaItem>
+        </phone:Panorama>
     </Grid>
 
 </phone:PhoneApplicationPage>

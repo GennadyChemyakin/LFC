@@ -103,13 +103,16 @@ namespace LFC.Client
 
         //    return request.execute().Result;
         //}
-        public LFCArtist artistGetInfo(string artistName)
+        public async  Task<LFCArtist> artistGetInfo(string artistName)
         {
             try
             {
                 var request = new LFCRequest();
                 request.addParameter("artist", artistName);
-                JObject obj = JObject.Parse(request.execute().ToString());
+                request.addParameter("method", "artist.GetInfo");
+                request.addParameter("api_key", apiKey);
+                var response =  await request.execute();
+                JObject obj = JObject.Parse(response);
                 return new LFCArtist((JObject)obj["artist"]);
             }
             catch (NullReferenceException e) 

@@ -26,7 +26,7 @@ namespace LFC
         }
 
         private async void Library_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {           
             switch (LibraryPanorama.SelectedIndex)
             {
                 case 0: // рекомендации
@@ -54,6 +54,7 @@ namespace LFC
                     recentPlayLPB.IsIndeterminate = false;
                     break;
             }
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -67,9 +68,19 @@ namespace LFC
             LibraryPanorama.SetValue(Panorama.SelectedItemProperty, LibraryPanorama.Items[0]);
         }
 
-        private void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
+        private async void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            LFCArtist ar = new LFCArtist();
+            ar =  await client.artistGetInfo(str);
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(ar);
+            NavigationService.Navigate(new Uri("/ArtistInfo.xaml", UriKind.Relative), objList);
+                
+            
         }
     }
 }
