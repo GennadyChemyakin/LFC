@@ -104,7 +104,24 @@ namespace LFC.Client
 
         //    return request.execute().Result;
         //}
-
+        public LFCArtist artistGetInfo(string artistName)
+        {
+            try
+            {
+                var request = new LFCRequest();
+                request.addParameter("artist", artistName);
+                JObject obj = JObject.Parse(request.execute().ToString());
+                return new LFCArtist((JObject)obj["artist"]);
+            }
+            catch (NullReferenceException e) 
+            {
+                throw e;
+            }
+            catch (InvalidCastException e)
+            {
+                throw e;
+            }
+        }
         public LFCUser userGetInfo(string username)
         {
             var request = new LFCRequest();
@@ -210,14 +227,6 @@ namespace LFC.Client
                 throw e;
             }
             return s;
-        }
-
-        public LFCArtist artistGetInfo(string artistName)
-        {
-            var request = new LFCRequest();
-            request.addParameter("artist", artistName);
-            JObject obj = JObject.Parse(request.execute().ToString());
-            return new LFCArtist((JObject)obj["artist"]);
         }
 
         public async Task<List<LFCTrack>> userGetRecentTracks(string user)

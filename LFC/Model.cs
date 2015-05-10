@@ -398,7 +398,17 @@ namespace LFC.Models
             }
         }
         #endregion
-
+        public LFCArtist()
+        {
+            name = String.Empty;
+            url = String.Empty;
+            image = String.Empty;
+            summary = String.Empty;
+            publish = String.Empty;
+            content = String.Empty;
+            plays = String.Empty;
+            listeners = String.Empty;
+        }
         public LFCArtist(JObject obj)
         {
             name = obj.Value<string>("name");
