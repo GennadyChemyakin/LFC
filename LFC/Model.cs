@@ -421,10 +421,10 @@ namespace LFC.Models
             Plays = obj.Value<JArray>("stats")["plays"].Value<string>();
         }
 
-        public LFCArtist()
-        {
+        //public LFCArtist()
+        //{
 
-        }
+        //}
         public override string ToString()
         {
             String str = "";
