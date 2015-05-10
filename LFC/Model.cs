@@ -330,7 +330,7 @@ namespace LFC.Models
         private string url;
         private string image;
         private string summary;
-        private string publish;
+        private DateTime publish;
         private string content;
         private string plays;
         private string listeners;
@@ -377,7 +377,7 @@ namespace LFC.Models
             get { return summary; }
             set { summary = value; }
         }
-        public string Publish
+        public DateTime Publish
         {
             get { return publish; }
             set { publish = value; }
@@ -420,7 +420,7 @@ namespace LFC.Models
             url = String.Empty;
             image = String.Empty;
             summary = String.Empty;
-            publish = String.Empty;
+            
             content = String.Empty;
             plays = String.Empty;
             listeners = String.Empty;
@@ -430,11 +430,12 @@ namespace LFC.Models
             name = obj.Value<string>("name");
             url = obj.Value<string>("url");
             image = obj.Value<JArray>("image")[3]["#text"].Value<string>();
-            summary = obj.Value<JArray>("bio")["summary"].Value<string>();
-            publish = obj.Value<JArray>("bio")["published"].Value<string>();
-            content = obj.Value<JArray>("bio")["content"].Value<string>();
-            Listeners = obj.Value<JArray>("stats")["listeners"].Value<string>();
-            Plays = obj.Value<JArray>("stats")["plays"].Value<string>();
+            summary = obj.Value<JObject>("bio")["summary"].ToString();
+            publish = DateTime.Parse(obj.Value<JObject>("bio")["published"].ToString());
+            content = obj.Value<JObject>("bio")["content"].ToString();
+            content =  Regex.Replace(content, @"<(.|\n)*?>", string.Empty);
+            Listeners = obj.Value<JObject>("stats")["listeners"].ToString();
+            Plays = obj.Value<JObject>("stats")["playcount"].ToString();
         }
 
         public override string ToString()
