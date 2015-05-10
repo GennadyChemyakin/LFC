@@ -42,7 +42,7 @@ namespace LFC.Client
                 {
                     Console.WriteLine(e.StackTrace);
                     throw e;
-                }
+                }           
             }
         }
     }
@@ -135,7 +135,7 @@ namespace LFC.Client
         }
 
         public async Task<string> userMusicCompare(string user1, string user2)
-        {
+        {            
             var request = new LFCRequest();
             request.addParameter("method", "tasteometer.compare");
             request.addParameter("type1", "user");
@@ -189,11 +189,11 @@ namespace LFC.Client
             //dynamic shouts = obj.shouts.shout;
             var response = await request.execute();
             try
-            {
+            { 
                 JObject json = JObject.Parse(response);
                 var shouts = json["shouts"]["shout"];
                 var count = json["shouts"]["@attr"].Value<int>("total");
-
+            
                 if (count < 2)
                 {
                     if (count == 0)
@@ -202,8 +202,8 @@ namespace LFC.Client
                         s.Add(new LFCShout(shouts.Value<JObject>()));
                 }
                 else
-                    foreach (JObject shout in shouts)
-                        s.Add(new LFCShout(shout));
+                foreach (JObject shout in shouts)
+                    s.Add(new LFCShout(shout));
             }
             catch (NullReferenceException e)         // если shout нет
             {
@@ -232,7 +232,7 @@ namespace LFC.Client
             //dynamic tracks = obj.recenttracks.track;
 
             JObject json = JObject.Parse(await request.execute());
-            var tracks = json["recenttracks"]["tracks"];
+            var tracks = json["recenttracks"]["track"];
             try
             {
                 foreach (JObject track in tracks)
@@ -384,8 +384,8 @@ namespace LFC.Client
             var events = json["events"]["event"];
             //try
             //{
-            foreach (JObject ev in events)
-                e.Add(new LFCEvent(ev));
+                foreach (JObject ev in events)
+                    e.Add(new LFCEvent(ev));
             //}
             //catch (NullReferenceException ex) { throw ex; }
 
