@@ -30,6 +30,10 @@ namespace LFC
             switch (LibraryPanorama.SelectedIndex)
             {
                 case 0: // рекомендации
+                    yourRecomPB.IsIndeterminate = true;
+                    artists = await client.userGetRecommendedArtists(auth.UserName);
+                    yourRecomList.ItemsSource = artists;
+                    yourRecomPB.IsIndeterminate = false;
                     break;
                 case 1: // музыка
                     yourMusicPB.IsIndeterminate = true;

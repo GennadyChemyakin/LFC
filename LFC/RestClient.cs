@@ -285,6 +285,39 @@ namespace LFC.Client
             return s;
         }
 
+        public async Task<List<LFCArtist>> userGetRecommendedArtists(string user)
+        {
+            List<LFCArtist> s = new List<LFCArtist>();
+            string requestString = "api_key" + apiKey +
+                       "methoduser.getRecommendedArtists" + "sk" + sk + "96bd810a71249530b5f3831cd09f43d1";
+            string api_sig = MD5Core.GetHashString(requestString);
+
+            var request = new LFCRequest();
+            request.addParameter("method", "user.getRecommendedArtists");
+            request.addParameter("api_key", apiKey);
+            request.addParameter("api_sig", api_sig);
+            request.addParameter("sk", sk);
+
+            try
+            {
+                JObject json = JObject.Parse(await request.execute());
+                var artists = json["recommendations"]["artist"];
+                foreach (JObject artist in artists)
+                {
+                    LFCArtist a = new LFCArtist();
+                    a.Name = artist.Value<string>("name");
+                    a.Url = artist.Value<string>("url");
+                    a.Image = artist.Value<JArray>("image")[3]["#text"].Value<string>();
+                    s.Add(a);
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                throw e;
+            }
+            return s;
+        }
+
         public async Task<List<LFCTrack>> libraryGetTracks(string user)
         {
             List<LFCTrack> s = new List<LFCTrack>();
@@ -382,9 +415,8 @@ namespace LFC.Client
             if (result.Value<string>().Equals("ok"))
                 return true;
             else return false;
-
-
         }
+
         public async Task<List<LFCEvent>> geoGetEvents(string lat, string lon, string tag = "")
         {
             List<LFCEvent> e = new List<LFCEvent>();
