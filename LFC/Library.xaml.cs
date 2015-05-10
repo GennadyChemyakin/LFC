@@ -16,6 +16,7 @@ namespace LFC
     {
         private LFCTrack track = new LFCTrack();
         private List<LFCTrack> tracks = new List<LFCTrack>();
+        private List<LFCArtist> artists = new List<LFCArtist>();
         private LFCAuth auth;
         private Client.Client client;
         public Library()
@@ -36,9 +37,13 @@ namespace LFC
                     yourMusicList.ItemsSource = tracks;
                     yourMusicPB.IsIndeterminate = false;
                     break;
-                case 2: // любимые
+                case 2: // исполнители
+                    artistPB.IsIndeterminate = true;
+                    artists = await client.libraryGetArtists(auth.UserName);
+                    artistList.ItemsSource = artists;
+                    artistPB.IsIndeterminate = false;
                     break;
-                case 3: // недавние
+                case 4: // недавние
                     recentPlayLPB.IsIndeterminate = true;
                     tracks = await client.userGetRecentTracks(auth.UserName);
                     recentPlayLList.ItemsSource = tracks;
