@@ -50,11 +50,13 @@ namespace LFC.Client
     {
         private string apiKey;
         private string sk; // ключ для авторизованных запросов
+        private LFCAuth auth;
 
         public Client(LFCAuth auth)
         {
             apiKey = "0909a979a62a8693b4846e53370a8d20";
             sk = auth.Sk;
+            this.auth = auth;
         }
         public Client()
         {
@@ -272,7 +274,15 @@ namespace LFC.Client
                     a.Name = artist.Value<string>("name");
                     a.Playcount = artist.Value<int>("playcount");
                     a.Url = artist.Value<string>("url");
-                    a.Image = artist.Value<JArray>("image")[3]["#text"].Value<string>();
+                    try
+                    {
+                        a.Image = artist.Value<JArray>("image")[3]["#text"].Value<string>();
+                        
+                    }
+                    catch (Exception e)
+                    {
+                        a.Image = "Assets/duckLFC.png";
+                    }
                     s.Add(a);
                 }
 
@@ -403,6 +413,28 @@ namespace LFC.Client
             string api_sig = MD5Core.GetHashString(requestString);
             var request = new LFCRequest();
             request.addParameter("method", "library.addArtist");
+            request.addParameter("artist", artist);
+            request.addParameter("api_key", apiKey);
+            request.addParameter("api_sig", api_sig);
+            request.addParameter("sk", sk);
+
+            var response = await request.execute();
+            var json = JObject.Parse(response);
+            var result = json["status"];
+
+            if (result.Value<string>().Equals("ok"))
+                return true;
+            else return false;
+        }
+
+        public async Task<bool> libraryRemoveArtist(string artist)
+        {
+            string requestString = "api_key" + apiKey + "artist" + artist +
+                                   "methodlibrary.removeArtist" + "sk" + sk + "96bd810a71249530b5f3831cd09f43d1";
+
+            string api_sig = MD5Core.GetHashString(requestString);
+            var request = new LFCRequest();
+            request.addParameter("method", "library.removeArtist");
             request.addParameter("artist", artist);
             request.addParameter("api_key", apiKey);
             request.addParameter("api_sig", api_sig);

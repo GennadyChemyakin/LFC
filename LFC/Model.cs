@@ -100,6 +100,7 @@ namespace LFC.Models
         private int playcount;
         private string trackUrl;
         private string artistUrl;
+        
         private DateTime date;
 
         public string Artist
@@ -167,6 +168,8 @@ namespace LFC.Models
             get { return date; }
             set { date = value; }
         }
+
+        
 
         public LFCTrack(JObject obj)
         {
@@ -332,6 +335,7 @@ namespace LFC.Models
         private string plays;
         private string listeners;
         private int playcount;
+        private string isInAuthUserLibrary;
         #region
         public string Name
         {
@@ -349,6 +353,18 @@ namespace LFC.Models
             set { image = value; }
         }
 
+        public string IsInAuthUserLibrary
+        {
+            get
+            {
+                return isInAuthUserLibrary;
+            }
+
+            set
+            {
+                isInAuthUserLibrary = value;
+            }
+        }
         public int Playcount
         {
             get { return playcount; }

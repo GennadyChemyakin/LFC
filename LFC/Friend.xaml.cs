@@ -17,7 +17,8 @@ namespace LFC
         private List<LFCUser> friends;
         private LFCAuth auth;
         private Client.Client client;
-        List<LFCShout> shouts = new List<LFCShout>();
+        private List<LFCShout> shouts = new List<LFCShout>();
+        private List<LFCArtist> artists = new List<LFCArtist>();
 
 
 
@@ -63,6 +64,25 @@ namespace LFC
                     if (friends.Count == 0) MessageBox.Show("У этого пользователя нет друзей :(");
                     friendProgress.IsIndeterminate = false;
                     break;
+                case 3:
+                    artistPB.IsIndeterminate = true;
+                    var authList = await client.libraryGetArtists(auth.UserName);
+                    var authListNames = new List<string>();
+                    foreach(LFCArtist artist in authList)
+                    {
+                        authListNames.Add(artist.Name);
+                    }
+                    artists = await client.libraryGetArtists(friend.Name);
+                    foreach(LFCArtist artist in artists)
+                    {
+                        if (authListNames.Contains(artist.Name))
+                            artist.IsInAuthUserLibrary = "-";
+                        else
+                            artist.IsInAuthUserLibrary = "+";
+                    }
+                    artistList.ItemsSource = artists;
+                    artistPB.IsIndeterminate = false;
+                    break;
             }
         }
 
@@ -88,6 +108,8 @@ namespace LFC
             profileProgress.IsIndeterminate = false;
             Music_Slider.Value = (int)(double.Parse(score) * 100);
             MusciBlock.Text = "Музыкальная совместимость " + (int)(double.Parse(score) * 100) + "%";
+
+            artists = await client.libraryGetArtists(friend.Name);
 
         }
 
@@ -125,6 +147,38 @@ namespace LFC
             ruporList.ItemsSource = shouts;
             if (shouts.Count == 0) MessageBox.Show("Этому пользователю никто не пишет :(");
             ruporProgress.IsIndeterminate = false;
+        }
+
+        private void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void buttonChangeLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var myobject = button.DataContext;
+            //ListBoxItem pressedItem = this.artistList.ItemContainerGenerator.ContainerFromItem(myobject) as ListBoxItem;
+            if (button.Content.Equals("-"))
+            {
+                var result = await client.libraryRemoveArtist((myobject as LFCArtist).Name);
+                if(result == true)
+                {
+                    MessageBox.Show("Исполнитель удален из вашей библиотеки");
+                    button.Content = "+";
+                }
+                    
+            }
+            else if(button.Content.Equals("+"))
+            {
+                var name = (myobject as LFCArtist).Name;
+                var result = await client.libraryAddArtist(name);
+                if (result == true)
+                {
+                    MessageBox.Show("Исполнитель добавлен в вашу библиотеку");
+                    button.Content = "-";
+                }
+            }
         }
     }
 }
