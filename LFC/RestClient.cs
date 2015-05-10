@@ -249,7 +249,6 @@ namespace LFC.Client
             }
             catch (NullReferenceException e)         // если треков нет
             {
-                throw e;
             }
             return s;
         }
@@ -281,7 +280,6 @@ namespace LFC.Client
             }
             catch (NullReferenceException e)         // если нет
             {
-                throw e;
             }
             return s;
         }
