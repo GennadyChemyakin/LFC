@@ -45,13 +45,13 @@
                                         <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
                                             <Paragraph>
                                                 <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
-                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
+                                                    <Run Text="{Binding Name }"  Foreground="Black" TextDecorations="None"/>
                                                 </Hyperlink>
                                             </Paragraph>
                                         </RichTextBox>
                                         <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
-                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                    <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
