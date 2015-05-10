@@ -31,6 +31,10 @@ namespace LFC
                 case 0: // рекомендации
                     break;
                 case 1: // музыка
+                    yourMusicPB.IsIndeterminate = true;
+                    tracks = await client.libraryGetTracks(auth.UserName);
+                    yourMusicList.ItemsSource = tracks;
+                    yourMusicPB.IsIndeterminate = false;
                     break;
                 case 2: // любимые
                     break;
