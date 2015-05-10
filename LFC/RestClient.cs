@@ -13,7 +13,6 @@ namespace LFC.Client
         private string serverUrl;
         private Dictionary<string, string> requestParams;
 
-
         public LFCRequest()
         {
             serverUrl = "https://ws.audioscrobbler.com";
@@ -308,7 +307,14 @@ namespace LFC.Client
                     a.TrackUrl = track.Value<string>("url");
                     a.Artist = track.Value<JToken>("artist").Value<string>("name");
                     a.ArtistUrl = track.Value<JToken>("artist").Value<string>("url");
-                    a.ImgLarge = track.Value<JArray>("image")[3]["#text"].Value<string>();
+                    try
+                    {
+                        a.ImgLarge = track.Value<JArray>("image")[3]["#text"].Value<string>();
+                    }
+                    catch(NullReferenceException e)
+                    {
+                        a.ImgLarge = "Assets/duckLFC.png";
+                    }
                     s.Add(a);
                 }
 

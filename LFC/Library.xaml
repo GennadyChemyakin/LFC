@@ -67,7 +67,7 @@
                     <ListBox x:Name="yourMusicList" ItemsSource="{Binding yourMusic}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Height="Auto">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="128"/>
                                     </Grid.RowDefinitions>
@@ -77,19 +77,59 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition />
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
-                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
                                             <Paragraph>
                                                 <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
-                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
+                                                    <Run Text="{Binding Artist }"  Foreground="Black" TextDecorations="None"/>
                                                 </Hyperlink>
                                             </Paragraph>
                                         </RichTextBox>
-                                        <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
+                                        <TextBlock Text="{Binding Name }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
+                                        <TextBlock Text="{Binding Playcount, StringFormat='Прослушано \{0\} раз'}" Grid.Row="2" TextWrapping="Wrap" FontSize="16" Foreground="Black"/>
                                     </Grid>
-                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                    <Image Source="{Binding ImgLarge }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </phone:PanoramaItem>
+
+            <!--Исполнители-->
+            <phone:PanoramaItem Header="Исполнители" Foreground="Black" >
+                <StackPanel x:Name="artistSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
+                    <ProgressBar Name="artistPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
+
+                    <ListBox x:Name="artistList" ItemsSource="{Binding yourMusic}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="Auto">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="128"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="128"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
+                                            <Paragraph>
+                                                <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
+                                                    <Run Text="{Binding Name }"  Foreground="Black" TextDecorations="None"/>
+                                                </Hyperlink>
+                                            </Paragraph>
+                                        </RichTextBox>
+                                        <TextBlock Text="{Binding Playcount, StringFormat='Прослушано \{0\} раз'}" Grid.Row="1" TextWrapping="Wrap" FontSize="16" Foreground="Black"/>
+                                    </Grid>
+                                    <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
