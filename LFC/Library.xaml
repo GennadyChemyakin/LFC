@@ -137,44 +137,6 @@
                 </StackPanel>
             </phone:PanoramaItem>
 
-            <!-- Любимые -->
-            <phone:PanoramaItem Header="Любимые" Foreground="Black" >
-                <StackPanel x:Name="yourFavSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
-                    <ProgressBar Name="yourFavPB" HorizontalAlignment="Left" Height="11" VerticalAlignment="Top" Width="420"/>
-
-                    <ListBox x:Name="yourFavList" ItemsSource="{Binding yourFav}"  Margin="10,0,30,0" Height="486" Width="450" FontSize="20">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="128"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="128"/>
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Height ="40" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
-                                            <Paragraph>
-                                                <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
-                                                    <Run Text="{Binding Первая_строчка }"  Foreground="Black" TextDecorations="None"/>
-                                                </Hyperlink>
-                                            </Paragraph>
-                                        </RichTextBox>
-                                        <TextBlock Text="{Binding Вторая_строчка }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
-                                    </Grid>
-                                    <Image Source="{Binding картинка }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </StackPanel>
-            </phone:PanoramaItem>
-
             <!-- Недавно прослушанные -->
             <phone:PanoramaItem Header="Недавние" Foreground="Black" >
                 <StackPanel x:Name="recentPlayLSP" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
