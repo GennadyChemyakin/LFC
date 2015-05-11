@@ -26,15 +26,15 @@ namespace LFC
         }
 
         private async void Library_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {           
             switch (LibraryPanorama.SelectedIndex)
             {
                 case 0: // рекомендации
                     yourRecomPB.IsIndeterminate = true;
                     try
                     {
-                        artists = await client.userGetRecommendedArtists(auth.UserName);
-                        yourRecomList.ItemsSource = artists;
+                    artists = await client.userGetRecommendedArtists(auth.UserName);
+                    yourRecomList.ItemsSource = artists;
                     }
                     catch (Exception err)
                     {
@@ -47,8 +47,8 @@ namespace LFC
                     yourMusicPB.IsIndeterminate = true;
                     try
                     {
-                        tracks = await client.libraryGetTracks(auth.UserName);
-                        yourMusicList.ItemsSource = tracks;
+                    tracks = await client.libraryGetTracks(auth.UserName);
+                    yourMusicList.ItemsSource = tracks;
                     }
                     catch (Exception err)
                     {
@@ -62,8 +62,8 @@ namespace LFC
                     artistPB.IsIndeterminate = true;
                     try
                     {
-                        artists = await client.libraryGetArtists(auth.UserName);
-                        artistList.ItemsSource = artists;
+                    artists = await client.libraryGetArtists(auth.UserName);
+                    artistList.ItemsSource = artists;
                     }
                     catch (Exception err)
                     {
@@ -77,8 +77,8 @@ namespace LFC
                     recentPlayLPB.IsIndeterminate = true;
                     try
                     {
-                        tracks = await client.userGetRecentTracks(auth.UserName);
-                        recentPlayLList.ItemsSource = tracks;
+                    tracks = await client.userGetRecentTracks(auth.UserName);
+                    recentPlayLList.ItemsSource = tracks;
                     }
                     catch (Exception err)
                     {
@@ -112,10 +112,9 @@ namespace LFC
             ar = await client.artistGetInfo(str);
             List<object> objList = new List<object>();
             objList.Add(auth);
+            objList.Add(null); // костыль
             objList.Add(ar);
             NavigationService.Navigate(new Uri("/ArtistInfo.xaml", UriKind.Relative), objList);
-
-
         }
     }
 }

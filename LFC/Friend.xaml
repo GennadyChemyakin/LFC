@@ -181,41 +181,6 @@
                     </ListBox>
                 </StackPanel>
             </phone:PanoramaItem>
-
-            <phone:PanoramaItem Header="Grid" Foreground="Black" >
-                <StackPanel x:Name="temp" HorizontalAlignment="Left" Height="493" Margin="0,-28,-1,0" VerticalAlignment="Top" Width="450">
-
-
-                    <Grid Height="Auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="128"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="128"/>
-                            <ColumnDefinition Width="235"/>
-                            <ColumnDefinition Width="86"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <RichTextBox IsReadOnly="True"  Grid.Row="0" TextWrapping="Wrap" FontSize="26" Foreground="Black"  Background="Transparent" BorderBrush="{x:Null}" AcceptsReturn="False" BorderThickness="0" >
-                                <Paragraph>
-                                    <Hyperlink Name="linkToArtistInfo" Click="linkToArtistInfo_Click">
-                                        <Run Text="{Binding Name }"  Foreground="Black" TextDecorations="None"/>
-                                    </Hyperlink>
-                                </Paragraph>
-                            </RichTextBox>
-                            <TextBlock Text="{Binding Playcount, StringFormat='Прослушано \{0\} раз'}" Grid.Row="1" TextWrapping="Wrap" FontSize="16" Foreground="Black"/>
-                        </Grid>
-                        <Image Source="{Binding Image }"  Grid.Row="0" Grid.Column="0"/>
-                        <!--<TextBlock Text="+" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" FontSize="16" Foreground="Black"/>-->
-                        <Button x:Name="buttonAddToLibrary" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Foreground="Black" BorderBrush="Black" VerticalAlignment="Stretch" MinWidth="0" Content="+" Width="70" Margin="0,29" Grid.ColumnSpan="3" />
-                    </Grid>
-
-                </StackPanel>
-            </phone:PanoramaItem>
         </phone:Panorama>
     </Grid>
 
