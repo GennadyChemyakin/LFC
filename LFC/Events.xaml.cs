@@ -63,25 +63,40 @@ namespace LFC
         async void Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (Main.SelectedIndex)
-                {
-                    case 0:  // твои события
-                        yourEventPB.IsIndeterminate = true;
+            {
+                case 0:  // твои события
+                    yourEventPB.IsIndeterminate = true;
+                    try
+                    {
                         yourEvents = await client.userGetEvents(auth.UserName);
-                        yourEventList.ItemsSource = yourEvents;
-                        yourEventPB.IsIndeterminate = false;
-                        break;
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("У вас нет намеченных событий :(");
+                    }               
+                    yourEventList.ItemsSource = yourEvents;
+                    yourEventPB.IsIndeterminate = false;
+                    break;
 
-                    case 1: // рекомендованные
-                        recEventPB.IsIndeterminate = true;
-                        Geoposition geoposition = await getGeo();
-                        double lat = geoposition.Coordinate.Point.Position.Latitude;
-                        double lon = geoposition.Coordinate.Point.Position.Longitude;
+                case 1: // рекомендованные
+                    recEventPB.IsIndeterminate = true;
+                    Geoposition geoposition = await getGeo();
+                    double lat = geoposition.Coordinate.Point.Position.Latitude;
+                    double lon = geoposition.Coordinate.Point.Position.Longitude;
+                    try
+                    {
                         recommendedEvents = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
-                        recEventList.ItemsSource = recommendedEvents;
-                        recEventPB.IsIndeterminate = false;
-                        break;
-                }
-            
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("Для вас нет рекомендованных событий :(");
+                    }
+
+                    recEventList.ItemsSource = recommendedEvents;
+                    recEventPB.IsIndeterminate = false;
+                    break;
+            }
+
 
         }
 

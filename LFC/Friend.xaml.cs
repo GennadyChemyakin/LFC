@@ -37,7 +37,14 @@ namespace LFC
                     NameBlock.Text = friend.Name;
                     RealNameBlock.Text = friend.RealName;
                     UserImg.Source = new BitmapImage(new Uri(friend.ImgMedium, UriKind.RelativeOrAbsolute));
-                    friends = await client.userGetFriends(friend.Name);
+                    try
+                    {
+                        friends = await client.userGetFriends(friend.Name);
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("У пользователя нет друзей :(");
+                    }
                     profileProgress.IsIndeterminate = false;
                     FriendBlock.Content = "Друзей: " + friends.Count;
                     break;
@@ -59,28 +66,43 @@ namespace LFC
 
                 case 2:  // друзья
                     friendProgress.IsIndeterminate = true;
-                    friends = await client.userGetFriends(friend.Name);
+                    try
+                    {
+                        friends = await client.userGetFriends(friend.Name);
+                    }
+                    catch (Exception err)
+                    {
+                        Console.Write(err.StackTrace);
+                    }
                     friendsList.ItemsSource = friends;
                     if (friends.Count == 0) MessageBox.Show("У этого пользователя нет друзей :(");
                     friendProgress.IsIndeterminate = false;
                     break;
                 case 3:
                     artistPB.IsIndeterminate = true;
-                    var authList = await client.libraryGetArtists(auth.UserName);
-                    var authListNames = new List<string>();
-                    foreach(LFCArtist artist in authList)
+                    try
                     {
-                        authListNames.Add(artist.Name);
+                        var authList = await client.libraryGetArtists(auth.UserName);
+                        var authListNames = new List<string>();
+                        foreach (LFCArtist artist in authList)
+                        {
+                            authListNames.Add(artist.Name);
+                        }
+                        artists = await client.libraryGetArtists(friend.Name);
+                        foreach (LFCArtist artist in artists)
+                        {
+                            if (authListNames.Contains(artist.Name))
+                                artist.IsInAuthUserLibrary = "-";
+                            else
+                                artist.IsInAuthUserLibrary = "+";
+                        }
+                        artistList.ItemsSource = artists;
                     }
-                    artists = await client.libraryGetArtists(friend.Name);
-                    foreach(LFCArtist artist in artists)
+                    catch (Exception err)
                     {
-                        if (authListNames.Contains(artist.Name))
-                            artist.IsInAuthUserLibrary = "-";
-                        else
-                            artist.IsInAuthUserLibrary = "+";
+                        MessageBox.Show("В библиотеки этого пользователя нет исполнителей :(");
                     }
-                    artistList.ItemsSource = artists;
+                    
                     artistPB.IsIndeterminate = false;
                     break;
             }
@@ -101,16 +123,27 @@ namespace LFC
             RealNameBlock.Text = friend.RealName;
             UserImg.Source = new BitmapImage(new Uri(friend.ImgMedium, UriKind.RelativeOrAbsolute));
             profileProgress.IsIndeterminate = true;
-            friends = await client.userGetFriends(friend.Name);
+            try
+            {
+                friends = await client.userGetFriends(friend.Name);
+            }
+            catch (Exception err)
+            {
+                Console.Write(err.StackTrace);
+            }
             FriendBlock.Content = "Друзей: " + friends.Count;
-
-            var score = await client.userMusicCompare(auth.UserName, friend.Name);
+            try
+            {
+                var score = await client.userMusicCompare(auth.UserName, friend.Name);
+                Music_Slider.Value = (int)(double.Parse(score) * 100);
+                MusciBlock.Text = "Музыкальная совместимость " + (int)(double.Parse(score) * 100) + "%";
+            }
+            catch (Exception err)
+            {
+                Console.Write(err.StackTrace);
+            }
             profileProgress.IsIndeterminate = false;
-            Music_Slider.Value = (int)(double.Parse(score) * 100);
-            MusciBlock.Text = "Музыкальная совместимость " + (int)(double.Parse(score) * 100) + "%";
-
-            artists = await client.libraryGetArtists(friend.Name);
-
+           
         }
 
         private void linkToFriendProfile_Click(object sender, RoutedEventArgs e)
