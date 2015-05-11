@@ -26,31 +26,66 @@ namespace LFC
         }
 
         private async void Library_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {           
+        {
             switch (LibraryPanorama.SelectedIndex)
             {
                 case 0: // рекомендации
                     yourRecomPB.IsIndeterminate = true;
-                    artists = await client.userGetRecommendedArtists(auth.UserName);
-                    yourRecomList.ItemsSource = artists;
+                    try
+                    {
+                        artists = await client.userGetRecommendedArtists(auth.UserName);
+                        yourRecomList.ItemsSource = artists;
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("У вас нет рекомендаций :(");
+                        Console.Write(err.StackTrace);
+                    }
                     yourRecomPB.IsIndeterminate = false;
                     break;
                 case 1: // музыка
                     yourMusicPB.IsIndeterminate = true;
-                    tracks = await client.libraryGetTracks(auth.UserName);
-                    yourMusicList.ItemsSource = tracks;
+                    try
+                    {
+                        tracks = await client.libraryGetTracks(auth.UserName);
+                        yourMusicList.ItemsSource = tracks;
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("У вас нет музыки :(");
+                        Console.Write(err.StackTrace);
+                    }
+
                     yourMusicPB.IsIndeterminate = false;
                     break;
                 case 2: // исполнители
                     artistPB.IsIndeterminate = true;
-                    artists = await client.libraryGetArtists(auth.UserName);
-                    artistList.ItemsSource = artists;
+                    try
+                    {
+                        artists = await client.libraryGetArtists(auth.UserName);
+                        artistList.ItemsSource = artists;
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("У вас нет списка исполнителей :(");
+                        Console.Write(err.StackTrace);
+                    }
+
                     artistPB.IsIndeterminate = false;
                     break;
                 case 4: // недавние
                     recentPlayLPB.IsIndeterminate = true;
-                    tracks = await client.userGetRecentTracks(auth.UserName);
-                    recentPlayLList.ItemsSource = tracks;
+                    try
+                    {
+                        tracks = await client.userGetRecentTracks(auth.UserName);
+                        recentPlayLList.ItemsSource = tracks;
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("В недавно не слушали музыку :(");
+                        Console.Write(err.StackTrace);
+                    }
+                    
                     recentPlayLPB.IsIndeterminate = false;
                     break;
             }
@@ -74,13 +109,13 @@ namespace LFC
             var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
             var str = runText.Text;
             LFCArtist ar = new LFCArtist();
-            ar =  await client.artistGetInfo(str);
+            ar = await client.artistGetInfo(str);
             List<object> objList = new List<object>();
             objList.Add(auth);
             objList.Add(ar);
             NavigationService.Navigate(new Uri("/ArtistInfo.xaml", UriKind.Relative), objList);
-                
-            
+
+
         }
     }
 }
