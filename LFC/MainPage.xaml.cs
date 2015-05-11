@@ -114,5 +114,45 @@ namespace LFC
         {
             Main.DefaultItem = Main.Items[1];
         }
+
+        private void Recommended_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(0);
+            NavigationService.Navigate(new Uri("/Library.xaml", UriKind.Relative), objList);
+        }
+
+        private void Music_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(1);
+            NavigationService.Navigate(new Uri("/Library.xaml", UriKind.Relative), objList);
+        }
+
+        private void Artists_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(2);
+            NavigationService.Navigate(new Uri("/Library.xaml", UriKind.Relative), objList);
+        }
+
+        private void Recent_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(3);
+            NavigationService.Navigate(new Uri("/Library.xaml", UriKind.Relative), objList);
+        }
+
+        private void Lib_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(0);
+            NavigationService.Navigate(new Uri("/Library.xaml", UriKind.Relative), objList);
+        }
     }
 }

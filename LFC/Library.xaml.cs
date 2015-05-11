@@ -73,7 +73,7 @@ namespace LFC
 
                     artistPB.IsIndeterminate = false;
                     break;
-                case 4: // недавние
+                case 3: // недавние
                     recentPlayLPB.IsIndeterminate = true;
                     try
                     {
@@ -99,8 +99,9 @@ namespace LFC
                 App.ViewModel.LoadData();
             }
             auth = NavigationService.GetNavigationData().ElementAt(0) as LFCAuth;
+            int item = Convert.ToInt32(NavigationService.GetNavigationData().ElementAt(1));
             client = new Client.Client(auth);
-            LibraryPanorama.SetValue(Panorama.SelectedItemProperty, LibraryPanorama.Items[0]);
+            LibraryPanorama.SetValue(Panorama.SelectedItemProperty, LibraryPanorama.Items[item]);
         }
 
         private async void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
