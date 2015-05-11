@@ -77,10 +77,9 @@ namespace LFC
             ar =  await client.artistGetInfo(str);
             List<object> objList = new List<object>();
             objList.Add(auth);
+            objList.Add(null); // костыль
             objList.Add(ar);
             NavigationService.Navigate(new Uri("/ArtistInfo.xaml", UriKind.Relative), objList);
-                
-            
         }
     }
 }

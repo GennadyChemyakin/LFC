@@ -49,7 +49,7 @@ namespace LFC
                         ruporList.ItemsSource = shouts;
 
                     }
-                    catch(NullReferenceException err)
+                    catch (NullReferenceException err)
                     {
                         Console.Write(err.StackTrace);
                     }
@@ -68,12 +68,12 @@ namespace LFC
                     artistPB.IsIndeterminate = true;
                     var authList = await client.libraryGetArtists(auth.UserName);
                     var authListNames = new List<string>();
-                    foreach(LFCArtist artist in authList)
+                    foreach (LFCArtist artist in authList)
                     {
                         authListNames.Add(artist.Name);
                     }
                     artists = await client.libraryGetArtists(friend.Name);
-                    foreach(LFCArtist artist in artists)
+                    foreach (LFCArtist artist in artists)
                     {
                         if (authListNames.Contains(artist.Name))
                             artist.IsInAuthUserLibrary = "-";
@@ -149,9 +149,18 @@ namespace LFC
             ruporProgress.IsIndeterminate = false;
         }
 
-        private void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
+        private async void linkToArtistInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            var link = sender as System.Windows.Documents.Hyperlink;
+            var runText = link.Inlines.ElementAt(0) as System.Windows.Documents.Run;
+            var str = runText.Text;
+            LFCArtist ar = new LFCArtist();
+            ar = await client.artistGetInfo(str);
+            List<object> objList = new List<object>();
+            objList.Add(auth);
+            objList.Add(friend);
+            objList.Add(ar);
+            NavigationService.Navigate(new Uri("/ArtistInfo.xaml", UriKind.Relative), objList);
         }
 
         private async void buttonChangeLibrary_Click(object sender, RoutedEventArgs e)
@@ -162,14 +171,14 @@ namespace LFC
             if (button.Content.Equals("-"))
             {
                 var result = await client.libraryRemoveArtist((myobject as LFCArtist).Name);
-                if(result == true)
+                if (result == true)
                 {
                     MessageBox.Show("Исполнитель удален из вашей библиотеки");
                     button.Content = "+";
                 }
-                    
+
             }
-            else if(button.Content.Equals("+"))
+            else if (button.Content.Equals("+"))
             {
                 var name = (myobject as LFCArtist).Name;
                 var result = await client.libraryAddArtist(name);
