@@ -100,7 +100,7 @@ namespace LFC
                     }
                     catch (Exception err)
                     {
-                        MessageBox.Show("В библиотеки этого пользователя нет исполнителей :(");
+                        MessageBox.Show("В библиотеке этого пользователя нет исполнителей :(");
                     }
                     
                     artistPB.IsIndeterminate = false;

@@ -82,7 +82,7 @@ namespace LFC
                     }
                     catch (Exception err)
                     {
-                        MessageBox.Show("В недавно не слушали музыку :(");
+                        MessageBox.Show("Вы недавно не слушали музыку :(");
                         Console.Write(err.StackTrace);
                     }
                     
