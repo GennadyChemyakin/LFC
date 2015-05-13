@@ -489,8 +489,11 @@ namespace LFC.Client
             var events = json["events"]["event"];
             //try
             //{
-                foreach (JObject ev in events)
+            foreach (JObject ev in events)
+            {
+                if (DateTime.Parse(ev.Value<string>("startDate")) > DateTime.Now)
                     e.Add(new LFCEvent(ev));
+            }
             //}
             //catch (NullReferenceException ex) { throw ex; }
 
