@@ -452,6 +452,29 @@ namespace LFC.Client
             else return false;
         }
 
+        public async Task<bool> eventAttend(string eventID, int status)
+        {
+            string requestString = "api_key" + apiKey + "event" + eventID +
+                                   "methodevent.attend" + "sk" + sk + "status" + status.ToString() + "96bd810a71249530b5f3831cd09f43d1";
+
+            string api_sig = MD5Core.GetHashString(requestString);
+            var request = new LFCRequest();
+            request.addParameter("method", "event.attend");
+            request.addParameter("event", eventID);
+            request.addParameter("status", status.ToString());
+            request.addParameter("api_key", apiKey);
+            request.addParameter("api_sig", api_sig);
+            request.addParameter("sk", sk);
+
+            var response = await request.execute();
+            var json = JObject.Parse(response);
+            var result = json["status"];
+
+            if (result.Value<string>().Equals("ok"))
+                return true;
+            else return false;
+        }
+
         public async Task<List<LFCEvent>> geoGetEvents(string lat, string lon, string tag = "")
         {
             List<LFCEvent> e = new List<LFCEvent>();

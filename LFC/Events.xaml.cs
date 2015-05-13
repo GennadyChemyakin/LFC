@@ -73,7 +73,9 @@ namespace LFC
                     catch (Exception err)
                     {
                         MessageBox.Show("У вас нет намеченных событий :(");
-                    }               
+                        yourEvents.Clear();
+                        yourEventList.Items.Clear();
+                    }
                     yourEventList.ItemsSource = yourEvents;
                     yourEventPB.IsIndeterminate = false;
                     break;
@@ -86,6 +88,11 @@ namespace LFC
                     try
                     {
                         recommendedEvents = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
+                        //yourEvents = await client.userGetEvents(auth.UserName);
+                        foreach (LFCEvent ev in yourEvents)
+                        {
+                            recommendedEvents.Remove(ev);
+                        }
                     }
                     catch (Exception err)
                     {
@@ -143,6 +150,61 @@ namespace LFC
                     objList.Add(ev);
                     NavigationService.Navigate(new Uri("/EventInfo.xaml", UriKind.Relative), objList);
                 }
+            }
+        }
+
+        private async void buttonAttendEvent_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var myobject = button.DataContext;
+            var id = (myobject as LFCEvent).Id;
+            var res = await client.eventAttend(id,0);
+            if (res == true)
+            {
+                MessageBox.Show("Событие добавлено в список ваших событий");
+                recEventPB.IsIndeterminate = true;
+                Geoposition geoposition = await getGeo();
+                double lat = geoposition.Coordinate.Point.Position.Latitude;
+                double lon = geoposition.Coordinate.Point.Position.Longitude;
+                try
+                {
+                    recommendedEvents = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
+                    yourEvents = await client.userGetEvents(auth.UserName);
+                    foreach (LFCEvent ev in yourEvents)
+                    {
+                        recommendedEvents.Remove(ev);
+                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Для вас нет рекомендованных событий :(");
+                }
+                recEventList.ItemsSource = recommendedEvents;
+                recEventPB.IsIndeterminate = false;
+            }
+        }
+
+        private async void buttonDisAttendEvent_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var myobject = button.DataContext;
+            var id = (myobject as LFCEvent).Id;
+            var res = await client.eventAttend(id, 2);
+            if (res == true)
+            {
+                MessageBox.Show("Событие удалено из список ваших событий");
+                yourEventPB.IsIndeterminate = true;
+                try
+                {
+                    yourEvents = await client.userGetEvents(auth.UserName);
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("У вас нет намеченных событий :(");
+                    yourEvents.Clear();
+                }
+                yourEventList.ItemsSource = yourEvents;
+                yourEventPB.IsIndeterminate = false;
             }
         }
     }

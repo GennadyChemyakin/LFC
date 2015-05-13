@@ -35,7 +35,8 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="128"/>
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="220"/>
+                                        <ColumnDefinition Width="86"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
                                         <Grid.RowDefinitions>
@@ -55,6 +56,8 @@
                                         <TextBlock Text="{Binding Artist }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
                                     <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                    <Button x:Name="buttonDisAttendEvent" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Foreground="Black" BorderBrush="Black" VerticalAlignment="Stretch" MinWidth="0" Content="-" Click="buttonDisAttendEvent_Click" Width="70" Height="70" />
+
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -76,7 +79,8 @@
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="128"/>
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="220"/>
+                                        <ColumnDefinition Width="86"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="1" Grid.Row="0" Margin="10,0,30,0">
                                         <Grid.RowDefinitions>
@@ -95,6 +99,8 @@
                                         <TextBlock Text="{Binding Artist }" Grid.Row="1" TextWrapping="Wrap" FontSize="20" Foreground="Black"/>
                                     </Grid>
                                     <Image Source="{Binding Image }" Width="128" Height="128"  Grid.Row="0" Grid.Column="0"></Image>
+                                    <Button x:Name="buttonAttendEvent" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Foreground="Black" BorderBrush="Black" VerticalAlignment="Stretch" MinWidth="0" Content="+" Click="buttonAttendEvent_Click" Width="70" Height="70" />
+
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

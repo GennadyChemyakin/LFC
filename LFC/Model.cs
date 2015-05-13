@@ -276,6 +276,40 @@ namespace LFC.Models
 
         #endregion
 
+        public override bool Equals(Object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+
+            // If parameter cannot be cast to LFCEvent return false.
+            LFCEvent p = obj as LFCEvent;
+            if ((Object)p == null)
+            {
+                return false;
+            }
+            // Return true if the fields match:
+            return Id.Equals(p.Id);
+        }
+
+        public bool Equals(LFCEvent ev)
+        {
+            // If parameter is null return false.
+            if (ev == null)
+            {
+                return false;
+            }
+            // Return true if the fields match:
+            return Id.Equals(ev.Id);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
         public LFCEvent(JObject obj)
         {
             title = obj.Value<string>("title");
@@ -293,6 +327,8 @@ namespace LFC.Models
             canceled = obj.Value<bool>("canseled");
             attended = true;
         }
+
+       
 
 
         public override string ToString()
