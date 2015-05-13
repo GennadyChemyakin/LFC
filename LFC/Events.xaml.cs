@@ -74,7 +74,6 @@ namespace LFC
                     {
                         MessageBox.Show("У вас нет намеченных событий :(");
                         yourEvents.Clear();
-                        yourEventList.Items.Clear();
                     }
                     yourEventList.ItemsSource = yourEvents;
                     yourEventPB.IsIndeterminate = false;
@@ -158,7 +157,7 @@ namespace LFC
             var button = sender as Button;
             var myobject = button.DataContext;
             var id = (myobject as LFCEvent).Id;
-            var res = await client.eventAttend(id,0);
+            var res = await client.eventAttend(id, 0);
             if (res == true)
             {
                 MessageBox.Show("Событие добавлено в список ваших событий");
@@ -169,6 +168,13 @@ namespace LFC
                 try
                 {
                     recommendedEvents = await client.geoGetEvents(lat.ToString("0.00"), lon.ToString("0.00"));
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Для вас нет рекомендованных событий :(");
+                }
+                try
+                {
                     yourEvents = await client.userGetEvents(auth.UserName);
                     foreach (LFCEvent ev in yourEvents)
                     {
@@ -177,7 +183,7 @@ namespace LFC
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show("Для вас нет рекомендованных событий :(");
+                    Console.Write(err.StackTrace);
                 }
                 recEventList.ItemsSource = recommendedEvents;
                 recEventPB.IsIndeterminate = false;
